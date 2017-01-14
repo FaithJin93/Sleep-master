@@ -55,8 +55,7 @@ public class profileActivity extends Activity {
         saveButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(final View view) {
-                String fn = firstname.getText().toString();
-                String ln = lastname.getText().toString();
+
 
                 String url = "http://104.131.60.15:8080/people";
                 StringRequest request = new StringRequest(Request.Method.GET,
