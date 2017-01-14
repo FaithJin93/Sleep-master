@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+	<LinearLayout
+        android:layout_width="wrap_content"
+	    android:layout_height="220dp"
+	    android:orientation="vertical"
+	    android:id="@+id/line"
+        >      	
+    </LinearLayout> 
+    		
+    	<View 
+		 android:background="#ffffff" 
+		 android:layout_width="fill_parent" 
+		 android:layout_marginTop="10dip"
+		 android:layout_height="1.0dip" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/start_sleep_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/start_sleep"
+                android:layout_centerHorizontal="true"
+                android:text="开始睡眠"
+                android:textColor="#4169E1"
+                android:textSize="16sp" />
+           
+            
+            
+            <ImageView
+                android:id="@+id/end_sleep"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/end_sleep" />
+            <TextView
+                android:id="@+id/end_sleep_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/end_sleep"
+                android:layout_centerHorizontal="true"
+                android:text="结束睡眠"
+                android:textColor="#4169E1"
+                android:textSize="16sp" />
+            
+
+            <ImageView
+                android:id="@+id/start_sleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/start_sleep_time"
+                android:src="@drawable/start_sleep" />
+          
+        </RelativeLayout>
+           
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical" >
+
+             <TextView
+                 android:id="@+id/start_sleep_time"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentTop="true"
+                 android:layout_marginLeft="51dp"
+                 android:text="00:00"
+                 android:textColor="#4169E1"
+                 android:textSize="16sp" />
+
+             <TextView
+                 android:id="@+id/end_sleep_time"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignBaseline="@+id/start_sleep_time"
+                 android:layout_alignBottom="@+id/start_sleep_time"
+                 android:layout_marginLeft="88dp"
+                 android:layout_toRightOf="@+id/start_sleep_time"
+                 android:text="00:00"
+                 android:textColor="#4169E1"
+                 android:textSize="16sp" />
+
+           </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/relativeLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" >
+            <TextView
+                android:id="@+id/deth_sleep_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/deth_sleep"
+                android:text="深度睡眠"
+                android:textColor="#4169E1"
+                android:textSize="16sp" />
+            
+            
+            <ImageView
+                android:id="@+id/slight_sleep"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/slight_sleep_time_icon" />
+            <TextView
+                android:id="@+id/slight_sleep_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/slight_sleep"
+                android:layout_centerHorizontal="true"
+                android:text="浅度睡眠"
+                android:textColor="#4169E1"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/deth_sleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/slight_sleep"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="30dp"
+                android:src="@drawable/depth_sleep" />
+            
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/relativeLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical" >
+
+              <TextView
+                  android:id="@+id/deth_sleep_time"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignBaseline="@+id/slight_sleep_time"
+                  android:layout_alignBottom="@+id/slight_sleep_time"
+                  android:layout_alignParentLeft="true"
+                  android:layout_marginLeft="58dp"
+                  android:text="0h"
+                  android:textColor="#4169E1"
+                  android:textSize="16sp" />
+
+              <TextView
+                  android:id="@+id/slight_sleep_time"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentTop="true"
+                  android:layout_marginLeft="111dp"
+                  android:layout_toRightOf="@+id/deth_sleep_time"
+                  android:text="0h"
+                  android:textColor="#4169E1"
+                  android:textSize="16sp" />
+            
+         </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_weight="0.31"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="292dp"
+            android:layout_weight="4.11"
+            android:orientation="vertical" >
+            <Button
+                android:id="@+id/RdHistoryButton"
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/DeleteHistoryButton"
+                android:text="读取记录数据" />
+            
+            <Button
+                android:id="@+id/DeleteHistoryButton"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/sendButton"
+                android:text="删除记录" />
+            
+            <ListView
+                android:id="@+id/listMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/sendButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true" >
+            </ListView>
+
+            <Button
+                android:id="@+id/sendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:enabled="false"
+                android:text="Chart" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/deviceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@+string/device" />
+
+        <TextView
+            android:id="@+id/deviceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/deviceLabel"
+            android:text="@+string/no_device"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/rssival"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="_"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+     <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_select"
+            android:layout_width="fill_parent" 
+	        android:layout_height="50.0dip"
+            android:layout_marginRight="50.0dip" 
+            android:layout_marginLeft="50.0dip"
+            android:layout_marginBottom="1dip"
+            android:padding="12dp"
+            android:textSize="20.0sp" 
+	        android:textColor="#ffffffff" 
+	        android:background="@drawable/all_bg_btn" 
+            android:text="Connect" />
+    </LinearLayout>
+
+</LinearLayout>

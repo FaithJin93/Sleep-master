@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/logobackground"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:weightSum="3">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/logowhite"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:text="和唯健康管理"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_gravity="top">
+
+        <EditText
+            android:id="@+id/et_zh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="帐号"
+            android:textColorHint="@color/black" />
+
+        <EditText
+            android:id="@+id/et_mima"
+            android:layout_below="@+id/et_zh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:layout_marginBottom="10dp"
+            android:hint="密码"
+            android:textColorHint="@color/black"/>
+
+        <CheckBox
+            android:id="@+id/cb_mima"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_mima"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="12dip"
+            android:text="记住密码"
+            android:textColor="@color/black" />
+
+        <CheckBox
+            android:id="@+id/cb_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cb_mima"
+            android:layout_marginLeft="12dip"
+            android:text="自动登录"
+            android:textColor="@color/black" />
+        <Button
+            android:id="@+id/btn_login"
+            android:background="@drawable/login_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cb_auto"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+
+
+    </RelativeLayout>
+</LinearLayout>
