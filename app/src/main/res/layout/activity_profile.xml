@@ -17,52 +17,106 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:paddingTop="5dp"
             android:id="@+id/firstNameLabel"
-            android:paddingRight="@dimen/default_gap"
-            android:text="first name    "
+            android:text="First Name                "
             android:textSize="20dp"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/firstNameLabel"
+            android:layout_alignBaseline="@+id/firstNameLabel"
             android:id="@+id/firstNameValue"
-            android:textSize="8dp"
-            android:text="FN value"/>
+            android:textSize="20dp"
+            android:hint="first name"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/firstNameLabel"
+            android:layout_below="@+id/firstNameValue"
             android:id="@+id/lastNameLabel"
             android:textSize="20dp"
-            android:text="last name     "/>
+            android:text="Last Name     "/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/firstNameValue"
             android:layout_toRightOf="@+id/lastNameLabel"
+            android:layout_alignBaseline="@+id/lastNameLabel"
+            android:layout_alignLeft="@+id/firstNameValue"
             android:id="@+id/lastNameValue"
-            android:textSize="8dp"
+            android:textSize="20dp"
+            android:hint="last name"/>
 
-            android:text="LN value"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lastNameValue"
+            android:id="@+id/universityLabel"
+            android:textSize="20dp"
+            android:text="University     "/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/universityList"
+            android:layout_below="@+id/lastNameValue"
+            android:layout_alignBaseline="@+id/universityLabel"
+            android:layout_alignLeft="@+id/firstNameValue"
+            android:layout_toRightOf="@+id/universityLabel"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/universityList"
+            android:id="@+id/emailLabel"
+            android:textSize="20dp"
+            android:text="E-mail     "/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/universityList"
+            android:layout_toRightOf="@+id/emailLabel"
+            android:layout_alignBaseline="@+id/emailLabel"
+            android:layout_alignLeft="@+id/firstNameValue"
+            android:id="@+id/emailValue"
+            android:textSize="20dp"
+            android:hint="E-mail"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailValue"
+            android:id="@+id/graduationYearLabel"
+            android:textSize="20dp"
+            android:text="Graduation Year     "/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailValue"
+            android:layout_toRightOf="@+id/graduationYearLabel"
+            android:layout_alignBaseline="@+id/graduationYearLabel"
+            android:layout_alignLeft="@+id/firstNameValue"
+            android:id="@+id/graduationYearList"
+            android:textSize="20dp"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lastNameValue"
+            android:layout_below="@+id/graduationYearList"
             android:text="get"
-            android:id="@+id/saveButton"
-            />
+            android:id="@+id/saveButton"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/saveButton"
-            android:layout_below="@+id/lastNameValue"
+            android:layout_below="@+id/graduationYearList"
             android:text="post"
             android:id="@+id/postButton"/>
 
