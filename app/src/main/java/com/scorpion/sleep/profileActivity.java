@@ -60,8 +60,8 @@ public class profileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         _context = this;
-        String univeristy = "University of Toronto";
-        String gratuationYear = "2013";
+        String university = "University of Toronto";
+        String graduationYear = "2013";
 
         firstname = (EditText) findViewById(R.id.firstNameValue);
         lastname = (EditText) findViewById(R.id.lastNameValue);
@@ -73,8 +73,8 @@ public class profileActivity extends Activity {
         ArrayAdapter<CharSequence> adapterUniversity = ArrayAdapter.createFromResource(this,R.array.universityArray,android.R.layout.simple_spinner_item);
         adapterUniversity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerUniversity.setAdapter(adapterUniversity);
-        if (!univeristy.equals(null)) {
-            int spinnerPosition = adapterUniversity.getPosition(univeristy);
+        if (!university.equals(null)) {
+            int spinnerPosition = adapterUniversity.getPosition(university);
             spinnerUniversity.setSelection(spinnerPosition);
         }
 
@@ -82,8 +82,8 @@ public class profileActivity extends Activity {
         ArrayAdapter<CharSequence> adapterYear = ArrayAdapter.createFromResource(this,R.array.yearArray,android.R.layout.simple_spinner_item);
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerYear.setAdapter(adapterYear);
-        if (!gratuationYear.equals(null)) {
-            int spinnerPosition = adapterYear.getPosition(gratuationYear);
+        if (!graduationYear.equals(null)) {
+            int spinnerPosition = adapterYear.getPosition(graduationYear);
             spinnerYear.setSelection(spinnerPosition);
         }
 

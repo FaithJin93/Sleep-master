@@ -20,7 +20,7 @@
             android:textColor="@color/logowhite"
             android:gravity="center"
             android:textSize="40sp"
-            android:text="和唯健康管理"/>
+            android:text="AlumniLink"/>
 
     </RelativeLayout>
 
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="帐号"
+            android:hint="User Name"
             android:textColorHint="@color/black" />
 
         <EditText
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:layout_marginBottom="10dp"
-            android:hint="密码"
+            android:hint="Password"
             android:textColorHint="@color/black"/>
 
         <CheckBox
@@ -57,7 +57,7 @@
             android:layout_below="@id/et_mima"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="12dip"
-            android:text="记住密码"
+            android:text="Remember Me"
             android:textColor="@color/black" />
 
         <CheckBox
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/cb_mima"
             android:layout_marginLeft="12dip"
-            android:text="自动登录"
+            android:text="Auto Login"
             android:textColor="@color/black" />
         <Button
             android:id="@+id/btn_login"

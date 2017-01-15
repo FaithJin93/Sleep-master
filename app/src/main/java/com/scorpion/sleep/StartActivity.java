@@ -19,18 +19,18 @@ public class StartActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        RelativeLayout bookAppointment = (RelativeLayout) findViewById(R.id.button_book_appointment);
-        RelativeLayout viewData = (RelativeLayout) findViewById(R.id.button_view_sleep_data);
+        RelativeLayout personProfile = (RelativeLayout) findViewById(R.id.button_personal_profile);
+        RelativeLayout friendList = (RelativeLayout) findViewById(R.id.button_friend_list);
         RelativeLayout uploadData = (RelativeLayout) findViewById(R.id.button_upload_file);
-        RelativeLayout userInfo = (RelativeLayout) findViewById(R.id.button_user_info);
-        RelativeLayout needHelp = (RelativeLayout) findViewById(R.id.button_need_help);
-        RelativeLayout medHistory = (RelativeLayout) findViewById(R.id.button_medical_history);
-        bookAppointment.setOnClickListener(this);
-        viewData.setOnClickListener(this);
+        RelativeLayout addFriend = (RelativeLayout) findViewById(R.id.button_add_friend);
+        //RelativeLayout needHelp = (RelativeLayout) findViewById(R.id.button_need_help);
+        //RelativeLayout medHistory = (RelativeLayout) findViewById(R.id.button_medical_history);
+        personProfile.setOnClickListener(this);
+        friendList.setOnClickListener(this);
         uploadData.setOnClickListener(this);
-        userInfo.setOnClickListener(this);
-        needHelp.setOnClickListener(this);
-        medHistory.setOnClickListener(this);
+        addFriend.setOnClickListener(this);
+        //needHelp.setOnClickListener(this);
+        //medHistory.setOnClickListener(this);
     }
 
     @Override
@@ -60,24 +60,24 @@ public class StartActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_book_appointment:
-                startActivity(new Intent(this, BookingActivity.class));
+            case R.id.button_personal_profile:
+                startActivity(new Intent(this, profileActivity.class));
                 break;
-            case R.id.button_view_sleep_data:
-                startActivity(new Intent(this, MainActivity.class));
+            case R.id.button_friend_list:
+                startActivity(new Intent(this, SleepAnalyzer.class));
                 break;
             case R.id.button_upload_file:
                 startActivity(new Intent(this, UploadActivity.class));
                 break;
-            case R.id.button_user_info:
+            case R.id.button_add_friend:
                 startActivity(new Intent(this, UserInfoActivity.class));
                 break;
-            case R.id.button_need_help:
+            /*case R.id.button_need_help:
                 startActivity(new Intent(this, profileActivity.class));
                 break;
             case R.id.button_medical_history:
                 startActivity(new Intent(this, HistoryActivity.class));
-                break;
+                break;*/
         }
     }
 }

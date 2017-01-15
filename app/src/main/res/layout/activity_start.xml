@@ -9,56 +9,7 @@
     grid:alignmentMode="alignBounds"
     grid:rowOrderPreserved="false"
     grid:columnCount="2"
-    grid:rowCount="3" >
-
-    <RelativeLayout
-        android:layout_height="0dp"
-        android:layout_width="0dp"
-        grid:layout_column="0"
-        grid:layout_row="0"
-        grid:layout_columnWeight="1"
-        grid:layout_rowWeight="1"
-        grid:layout_gravity="fill_horizontal|center_horizontal"
-        android:background="#BA68C8"
-        android:id="@+id/button_book_appointment"
-        android:layout_marginTop="@dimen/grid_single_padding"
-        android:layout_marginLeft="@dimen/grid_single_padding"
-        android:layout_marginRight="@dimen/grid_single_padding" >
-
-        <TextView
-            android:id="@+id/tv_1_cn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_above="@+id/tv_1_en"
-            android:textSize="@dimen/grid_text_size"
-            android:gravity="center"
-            android:text="预约"
-            android:singleLine="false" />
-
-        <TextView
-            android:id="@+id/tv_1_en"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:paddingBottom="@dimen/grid_text_bottom_padding"
-            android:textSize="@dimen/grid_text_size"
-            android:gravity="center"
-            android:text="Book Appointments"
-            android:layout_alignParentBottom="true"
-            android:singleLine="false" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/calendar"
-            android:layout_above="@+id/tv_1_cn"
-            android:layout_centerHorizontal="true" />
-
-    </RelativeLayout>
+    grid:rowCount="2" >
 
     <RelativeLayout
         android:layout_height="0dp"
@@ -80,9 +31,9 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:layout_above="@+id/tv_2_en"
-            android:textSize="@dimen/grid_text_size"
+            android:textSize="5dp"
             android:gravity="center"
-            android:text="数据传输"
+            android:text=""
             android:singleLine="false" />
 
         <TextView
@@ -94,7 +45,7 @@
             android:paddingBottom="@dimen/grid_text_bottom_padding"
             android:textSize="@dimen/grid_text_size"
             android:gravity="center"
-            android:text="Data Transfer"
+            android:text="Upload Image"
             android:layout_alignParentBottom="true"
             android:singleLine="false" />
 
@@ -102,57 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView2"
-            android:src="@drawable/cloud"
+            android:src="@drawable/upload"
             android:layout_above="@+id/tv_2_cn"
-            android:layout_centerHorizontal="true" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_height="0dp"
-        android:layout_width="0dp"
-        grid:layout_column="0"
-        grid:layout_row="1"
-        grid:layout_columnWeight="1"
-        grid:layout_rowWeight="1"
-        grid:layout_gravity="fill_horizontal|center_horizontal"
-        android:background="#E57373"
-        android:id="@+id/button_view_sleep_data"
-        android:layout_marginTop="@dimen/grid_single_padding"
-        android:layout_marginLeft="@dimen/grid_single_padding"
-        android:layout_marginRight="@dimen/grid_single_padding" >
-
-        <TextView
-            android:id="@+id/tv_3_cn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_above="@+id/tv_3_en"
-            android:textSize="@dimen/grid_text_size"
-            android:gravity="center"
-            android:text="睡眠分析"
-            android:singleLine="false" />
-
-        <TextView
-            android:id="@+id/tv_3_en"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:paddingBottom="@dimen/grid_text_bottom_padding"
-            android:textSize="@dimen/grid_text_size"
-            android:gravity="center"
-            android:text="Sleep Analyzer"
-            android:layout_alignParentBottom="true"
-            android:singleLine="false" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView3"
-            android:src="@drawable/data"
-            android:layout_above="@+id/tv_3_cn"
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
@@ -166,9 +68,10 @@
         grid:layout_rowWeight="1"
         grid:layout_gravity="fill_horizontal|center_horizontal"
         android:background="#7986CB"
-        android:id="@+id/button_user_info"
+        android:id="@+id/button_add_friend"
         android:layout_marginTop="@dimen/grid_single_padding"
-        android:layout_marginRight="@dimen/grid_single_padding" >
+        android:layout_marginRight="@dimen/grid_single_padding"
+        android:layout_marginBottom="@dimen/grid_single_padding">
 
         <TextView
             android:id="@+id/tv_4_cn"
@@ -177,9 +80,9 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:layout_above="@+id/tv_4_en"
-            android:textSize="@dimen/grid_text_size"
+            android:textSize="5dp"
             android:gravity="center"
-            android:text="用户信息"
+            android:text=""
             android:singleLine="false" />
 
         <TextView
@@ -191,7 +94,7 @@
             android:paddingBottom="@dimen/grid_text_bottom_padding"
             android:textSize="@dimen/grid_text_size"
             android:gravity="center"
-            android:text="User Info"
+            android:text="Add Friend"
             android:layout_alignParentBottom="true"
             android:singleLine="false" />
 
@@ -199,13 +102,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView4"
-            android:src="@drawable/user"
+            android:src="@drawable/add"
             android:layout_above="@+id/tv_4_cn"
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <!--RelativeLayout
         android:layout_height="0dp"
         android:layout_width="0dp"
         grid:layout_column="0"
@@ -253,9 +156,58 @@
             android:layout_above="@+id/tv_5_cn"
             android:layout_centerHorizontal="true" />
 
-    </RelativeLayout>
+    </RelativeLayout-->
 
     <RelativeLayout
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        grid:layout_column="0"
+        grid:layout_row="0"
+        grid:layout_columnWeight="1"
+        grid:layout_rowWeight="1"
+        grid:layout_gravity="fill_horizontal|center_horizontal"
+        android:background="#BA68C8"
+        android:id="@+id/button_personal_profile"
+        android:layout_marginTop="@dimen/grid_single_padding"
+        android:layout_marginLeft="@dimen/grid_single_padding"
+        android:layout_marginRight="@dimen/grid_single_padding" >
+
+        <TextView
+            android:id="@+id/tv_1_cn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_above="@+id/tv_1_en"
+            android:textSize="5dp"
+            android:gravity="center"
+            android:text=""
+            android:singleLine="false" />
+
+        <TextView
+            android:id="@+id/tv_1_en"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:paddingBottom="@dimen/grid_text_bottom_padding"
+            android:textSize="@dimen/grid_text_size"
+            android:gravity="center"
+            android:text="Personal Profile"
+            android:layout_alignParentBottom="true"
+            android:singleLine="false" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/profile"
+            android:layout_above="@+id/tv_1_cn"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <!--RelativeLayout
         android:layout_height="0dp"
         android:layout_width="0dp"
         grid:layout_column="1"
@@ -300,6 +252,56 @@
             android:id="@+id/imageView6"
             android:src="@drawable/help"
             android:layout_above="@+id/tv_6_cn"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout-->
+
+    <RelativeLayout
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        grid:layout_column="0"
+        grid:layout_row="1"
+        grid:layout_columnWeight="1"
+        grid:layout_rowWeight="1"
+        grid:layout_gravity="fill_horizontal|center_horizontal"
+        android:background="#E57373"
+        android:id="@+id/button_friend_list"
+        android:layout_marginTop="@dimen/grid_single_padding"
+        android:layout_marginLeft="@dimen/grid_single_padding"
+        android:layout_marginRight="@dimen/grid_single_padding"
+        android:layout_marginBottom="@dimen/grid_single_padding" >
+
+        <TextView
+            android:id="@+id/tv_3_cn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_above="@+id/tv_3_en"
+            android:textSize="5dp"
+            android:gravity="center"
+            android:text=""
+            android:singleLine="false" />
+
+        <TextView
+            android:id="@+id/tv_3_en"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:paddingBottom="@dimen/grid_text_bottom_padding"
+            android:textSize="@dimen/grid_text_size"
+            android:gravity="center"
+            android:text="Friend List"
+            android:layout_alignParentBottom="true"
+            android:singleLine="false" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView3"
+            android:src="@drawable/friends"
+            android:layout_above="@+id/tv_3_cn"
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
