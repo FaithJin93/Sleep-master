@@ -8,12 +8,14 @@
     android:paddingBottom="1dp"
     >
 
-        <Button
+        <TextView
             android:id="@+id/friendName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:textSize="20dp"
             android:text="SBs"
+            android:layout_weight="1"
             />
 
 </LinearLayout>

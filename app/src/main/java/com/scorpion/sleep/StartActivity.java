@@ -70,7 +70,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
                 startActivity(new Intent(this, UploadActivity.class));
                 break;
             case R.id.button_add_friend:
-                startActivity(new Intent(this, UserInfoActivity.class));
+                startActivity(new Intent(this, AddFriendActivity.class));
                 break;
             /*case R.id.button_need_help:
                 startActivity(new Intent(this, profileActivity.class));
