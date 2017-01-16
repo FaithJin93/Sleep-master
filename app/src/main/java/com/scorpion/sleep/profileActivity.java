@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.PowerManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-public class profileActivity extends Activity {
+public class profileActivity extends AppCompatActivity {
 
 
     private EditText firstname;

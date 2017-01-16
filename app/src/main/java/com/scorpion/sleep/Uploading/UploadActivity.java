@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class UploadActivity extends Activity implements AdapterView.OnItemClickListener {
+public class UploadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private FileAdapter _fileListAdapter;
     private ListView _filesListView;

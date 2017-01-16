@@ -11,7 +11,7 @@ public class friendList extends AppCompatActivity {
     private RecyclerView friendListView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private String[] friendList = {"Cheese", "Pepperoni", "Black Olives","apple","orange","yellow"};
+    private String[] friendList = {"Eric Jin", "Steve Zhang", "Yufan Jin","April Jing"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class friendList extends AppCompatActivity {
         //mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new FriendListAdapter(friendList);
+        mAdapter = new FriendListAdapter(this,friendList);
         friendListView.setAdapter(mAdapter);
         friendListView.setLayoutManager(new LinearLayoutManager(this));
 

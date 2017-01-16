@@ -1,5 +1,6 @@
 package com.scorpion.sleep.util;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +10,12 @@ import android.widget.TextView;
 
 import com.scorpion.sleep.R;
 
-/**
- * Created by apple on 2017/1/15.
- */
+import org.w3c.dom.Text;
 
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
+
     private String[] friendList;
+    private Context mcontext;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -32,20 +33,27 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public FriendListAdapter(String[] friendList) {
+    public FriendListAdapter(Context contexts, String[] friendList) {
+        this.mcontext = contexts;
         this.friendList = friendList;
     }
 
+    private Context getContext(){
+        return mcontext;
+    }
     // Create new views (invoked by the layout manager)
     @Override
     public FriendListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.friend_list_card, parent, false);
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        View contactView = inflater.inflate(R.layout.friend_list_card, parent, false);
+
         // set the view's size, margins, paddings and layout parameters
 
-        ViewHolder vh = new ViewHolder(v);
+        ViewHolder vh = new ViewHolder(contactView);
         return vh;
     }
 

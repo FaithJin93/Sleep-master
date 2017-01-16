@@ -51,9 +51,11 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="70sp"
             android:id="@+id/imageView2"
             android:src="@drawable/upload"
+            android:layout_centerInParent="true"
             android:layout_above="@+id/tv_2_cn"
             android:layout_centerHorizontal="true" />
 
@@ -100,12 +102,12 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="15sp"
             android:id="@+id/imageView4"
             android:src="@drawable/add"
             android:layout_above="@+id/tv_4_cn"
-            android:layout_centerHorizontal="true" />
-
+            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
     <!--RelativeLayout
@@ -199,9 +201,11 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="15sp"
             android:id="@+id/imageView"
             android:src="@drawable/profile"
+            android:layout_centerInParent="true"
             android:layout_above="@+id/tv_1_cn"
             android:layout_centerHorizontal="true" />
 
@@ -298,9 +302,11 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="15sp"
             android:id="@+id/imageView3"
             android:src="@drawable/friends"
+            android:layout_centerInParent="true"
             android:layout_above="@+id/tv_3_cn"
             android:layout_centerHorizontal="true" />
 
