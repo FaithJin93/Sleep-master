@@ -110,21 +110,27 @@
                 android:id="@+id/graduationYearList"
                 android:textSize="20dp"/>
 
-            <Button
+            <!--Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/graduationYearList"
                 android:text="get"
-                android:id="@+id/saveButton"/>
+                android:id="@+id/saveButton"/-->
 
-            <Button
+            <!--Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/saveButton"
                 android:layout_below="@+id/graduationYearList"
                 android:text="post"
-                android:id="@+id/postButton"/>
+                android:id="@+id/postButton"/-->
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/graduationYearList"
+                android:text="SAVE"
+                android:id="@+id/saveButton"/>
 
             <TextView
                 android:layout_width="match_parent"

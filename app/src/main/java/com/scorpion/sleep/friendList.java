@@ -17,6 +17,7 @@ public class friendList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
+        setTitle("Friend List");
 
         // Lookup the recyclerview in activity layout
         friendListView = (RecyclerView) findViewById(R.id.my_recycler_view);

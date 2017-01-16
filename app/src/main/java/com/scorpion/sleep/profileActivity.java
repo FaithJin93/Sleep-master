@@ -60,14 +60,15 @@ public class profileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        setTitle("Personal Profile");
         _context = this;
         String university = "University of Toronto";
         String graduationYear = "2013";
 
         firstname = (EditText) findViewById(R.id.firstNameValue);
         lastname = (EditText) findViewById(R.id.lastNameValue);
-        saveButton = (Button) findViewById(R.id.saveButton);
-        postButton = (Button) findViewById(R.id.postButton);
+        //saveButton = (Button) findViewById(R.id.saveButton);
+        //postButton = (Button) findViewById(R.id.postButton);
         httpResp = (TextView) findViewById(R.id.httpResp);
 
         Spinner spinnerUniversity = (Spinner) findViewById(R.id.universityList);
@@ -93,7 +94,7 @@ public class profileActivity extends AppCompatActivity {
 
         //firstname.setVisibility(View.INVISIBLE);
 
-        saveButton.setOnClickListener(new OnClickListener() {
+        /*saveButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(final View view) {
 
@@ -119,66 +120,6 @@ public class profileActivity extends AppCompatActivity {
                 NetworkManager.inst(_context.getApplicationContext()).submitRequest(request);
             }
         });
-
-
-        /*
-        postButton.setOnClickListener(new OnClickListener() {
-            String fn = firstname.getText().toString();
-            String ln = lastname.getText().toString();
-
-            @Override
-            public void onClick(View view) {
-                String fn = firstname.getText().toString();
-                String ln = lastname.getText().toString();
-                String url = "http://104.131.60.15:8080/people";
-
-                StringRequest jsonRequest = new StringRequest(
-                        Request.Method.POST,
-                        url,
-                        new Response.Listener<String>(){
-                            @Override
-                            public void onResponse(String response) {
-                                Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
-                                httpResp.setText(response.toString());
-                            }
-                        },
-                        new Response.ErrorListener(){
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                httpResp.setText(error.toString());
-                            }
-                        }
-
-                ) {
-                    @Override
-                    protected Map<String,String> getParams() throws AuthFailureError {
-                        Map<String,String> params = new HashMap<String,String>();
-                        params.put("firstName",getFirstName());
-                        params.put("lastName",getLastName());
-                        Log.d("TEST-PPL", "Params for insert ppl post");
-                        printParamsLog(params);
-                        return params;
-                    }
-
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String,String> params = new HashMap<String, String>();
-                        params.put("Content-Type","application/json");
-                        params.put("user-agent", "android");
-                        Log.d("TEST-PPL", "Params for insert ppl post");
-                        printParamsLog(params);
-                        return params;
-                    }
-                };
-
-                NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
-
-            }
-        });
-
-        */
-
-
 
         postButton.setOnClickListener(new OnClickListener() {
 
@@ -252,7 +193,7 @@ public class profileActivity extends AppCompatActivity {
                 NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
 
             }
-        });
+        });*/
 
 
 

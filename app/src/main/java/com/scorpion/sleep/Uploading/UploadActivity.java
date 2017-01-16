@@ -42,6 +42,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+        setTitle("Upload Image");
         _context = this;
         _filesListView = (ListView) findViewById(R.id.files_listview);
         _noFilesTextView = (TextView) findViewById(R.id.no_files_textview);
