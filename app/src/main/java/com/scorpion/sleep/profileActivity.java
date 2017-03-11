@@ -156,7 +156,7 @@ public class profileActivity extends AppCompatActivity {
         firstname = (EditText) findViewById(R.id.firstNameValue);
         lastname = (EditText) findViewById(R.id.lastNameValue);
         email = (EditText) findViewById(R.id.emailValue);
-        //saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton = (Button) findViewById(R.id.saveButton);
         //postButton = (Button) findViewById(R.id.postButton);
         httpResp = (TextView) findViewById(R.id.httpResp);
 
@@ -209,22 +209,23 @@ public class profileActivity extends AppCompatActivity {
 
                 NetworkManager.inst(_context.getApplicationContext()).submitRequest(request);
             }
-        });
+        });*/
 
-        postButton.setOnClickListener(new OnClickListener() {
+        saveButton.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                String url = "http://104.131.60.15:8080/people";
+                String url = "http://10.0.2.2:8080/friends/";
 
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("firstName",getFirstName());
                 params.put("lastName",getLastName());
+                params.put("email",getEmail());
                 printParamsLog(params);
 
                 JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                        Request.Method.POST,
-                        url,
+                        Request.Method.PATCH,
+                        url + uid,
                         new JSONObject(params),
                         new Response.Listener<JSONObject>(){
                             @Override
@@ -283,7 +284,7 @@ public class profileActivity extends AppCompatActivity {
                 NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
 
             }
-        });*/
+        });
 
 
 
@@ -295,6 +296,10 @@ public class profileActivity extends AppCompatActivity {
 
     public String getLastName() {
         return lastname.getText().toString();
+    }
+
+    public String getEmail() {
+        return email.getText().toString();
     }
 
     private void printParamsLog(Map<String, String> params) {
