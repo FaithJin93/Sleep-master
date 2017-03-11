@@ -49,6 +49,7 @@ public class profileActivity extends AppCompatActivity {
 
 
     private EditText firstname;
+    private EditText email;
     private EditText lastname;
     private Button saveButton;
     private Button postButton;
@@ -61,7 +62,7 @@ public class profileActivity extends AppCompatActivity {
     private String fn;
     private String ln;
     private static final String debug = "DEBUG";
-    private String email;
+    private String eml;
     private String raw =null;
 
     private Context _context;
@@ -75,11 +76,11 @@ public class profileActivity extends AppCompatActivity {
 
 
 
-        String url = "http://10.0.2.2:8080/friends";
+        String url = "http://10.0.2.2:8080/friends/";
         Log.d(debug,"url "+url);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                url,
+                url+uid,
                 new JSONObject(),
                 new Response.Listener<JSONObject>(){
                     @Override
@@ -118,31 +119,32 @@ public class profileActivity extends AppCompatActivity {
 
 
                     //TODO: this is for http://localhost:8080/friends, so it return lists of user, if for single user, need rewrite parsing logic
-                    JSONArray friends = result.getJSONObject("_embedded").getJSONArray("friends");
-                    int len = friends.length();
+                    //JSONArray friends = result.getJSONArray("friends");
+                    //int len = friends.length();
                     JSONArray pending = new JSONArray();
                     JSONArray accepted = new JSONArray();
 
-                    System.out.println("Starts");
-                    for (int i = 0; i < len; i ++ ){
-                        JSONObject pairs = friends.getJSONObject(i);
-                        fn = pairs.getString("firstName");
-                        ln = pairs.getString("lastName");
-                        if (!pairs.get("email").equals(null))
-                            email = pairs.getString("email");
-                        if (!pairs.get("pendingFriendList").equals(null) ){
-                            pending = pairs.getJSONArray("pendingFriendList");
+                    //for (int i = 0; i < len; i ++ ){
+                        //JSONObject pairs = friends.getJSONObject(i);
+                        fn = result.getString("firstName");
+                        ln = result.getString("lastName");
+                        if (!result.get("email").equals(null))
+                            eml = result.getString("email");
+                        if (!result.get("pendingFriendList").equals(null) ){
+                            pending = result.getJSONArray("pendingFriendList");
                         }
-                        if (!pairs.get("acceptedFriendList").equals(null) ){
-                            accepted = pairs.getJSONArray("acceptedFriendList");
+                        if (!result.get("acceptedFriendList").equals(null) ){
+                            accepted = result.getJSONArray("acceptedFriendList");
                         }
-                    }
+                    JSONObject pairs = result.getJSONObject("_links");
+                    //}
 
                     return Response.success(result,
                             HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
                 } catch (JSONException je) {
+                    je.printStackTrace();
                     return Response.error(new ParseError(je));
                 }
             }
@@ -153,6 +155,7 @@ public class profileActivity extends AppCompatActivity {
 
         firstname = (EditText) findViewById(R.id.firstNameValue);
         lastname = (EditText) findViewById(R.id.lastNameValue);
+        email = (EditText) findViewById(R.id.emailValue);
         //saveButton = (Button) findViewById(R.id.saveButton);
         //postButton = (Button) findViewById(R.id.postButton);
         httpResp = (TextView) findViewById(R.id.httpResp);
@@ -177,6 +180,7 @@ public class profileActivity extends AppCompatActivity {
 
         firstname.setText(fn);
         lastname.setText(ln);
+        email.setText(eml);
 
         //firstname.setVisibility(View.INVISIBLE);
 
