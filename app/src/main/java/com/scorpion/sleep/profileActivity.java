@@ -54,6 +54,13 @@ public class profileActivity extends AppCompatActivity {
     private Button postButton;
     private TextView httpResp;
 
+    private String uid = "58c44144dd62294b320de5a5";
+    private String university = "University of Toronto";
+    private String graduationYear = "2013";
+    private String fn;
+    private String ln;
+    private String email;
+
     private Context _context;
 
     @Override
@@ -62,8 +69,79 @@ public class profileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setTitle("Personal Profile");
         _context = this;
-        String university = "University of Toronto";
-        String graduationYear = "2013";
+
+
+
+        String url = "http://localhost:8080/friends/" + uid;
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                new JSONObject(),
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null ){
+                            Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
+                            httpResp.setText("Succ: " + response.toString());
+                        }
+                        else{
+                            Log.d("Error","empty json response");
+                        }
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String LOG_TAG = "volley ppl post ";
+                        Log.d(LOG_TAG, "error with: " + error.getMessage());
+                        if (error.networkResponse != null)
+                            Log.i(LOG_TAG, "status code: " + error.networkResponse.statusCode);
+                        httpResp.setText(error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
+
+                    JSONObject result = null;
+
+                    if (jsonString != null && jsonString.length() > 0)
+                        result = new JSONObject(jsonString);
+
+                    JSONArray friends = result.getJSONObject("_embedded").getJSONArray("friends");
+                    int len = friends.length();
+                    JSONArray pending = new JSONArray();
+                    JSONArray accepted = new JSONArray();
+
+                    System.out.println("Starts");
+                    for (int i = 0; i < len; i ++ ){
+                        JSONObject pairs = friends.getJSONObject(i);
+                        fn = pairs.getString("firstName");
+                        ln = pairs.getString("lastName");
+                        if (!pairs.get("email").equals(null))
+                            email = pairs.getString("email");
+                        if (!pairs.get("pendingFriendList").equals(null) ){
+                            pending = pairs.getJSONArray("pendingFriendList");
+                        }
+                        if (!pairs.get("acceptedFriendList").equals(null) ){
+                            accepted = pairs.getJSONArray("acceptedFriendList");
+                        }
+                    }
+
+                    return Response.success(result,
+                            HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (JSONException je) {
+                    return Response.error(new ParseError(je));
+                }
+            }
+        };
+
+
 
         firstname = (EditText) findViewById(R.id.firstNameValue);
         lastname = (EditText) findViewById(R.id.lastNameValue);
@@ -89,8 +167,8 @@ public class profileActivity extends AppCompatActivity {
             spinnerYear.setSelection(spinnerPosition);
         }
 
-        firstname.setText("Eric");
-        lastname.setText("Gin");
+        firstname.setText(fn);
+        lastname.setText(ln);
 
         //firstname.setVisibility(View.INVISIBLE);
 
