@@ -55,11 +55,14 @@ public class profileActivity extends AppCompatActivity {
     private TextView httpResp;
 
     private String uid = "58c44144dd62294b320de5a5";
+//    private String steve_uid = "58c216cd160fe397212f4b3b";
     private String university = "University of Toronto";
     private String graduationYear = "2013";
     private String fn;
     private String ln;
+    private static final String debug = "DEBUG";
     private String email;
+    private String raw =null;
 
     private Context _context;
 
@@ -72,7 +75,8 @@ public class profileActivity extends AppCompatActivity {
 
 
 
-        String url = "http://localhost:8080/friends/" + uid;
+        String url = "http://10.0.2.2:8080/friends";
+        Log.d(debug,"url "+url);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -81,6 +85,7 @@ public class profileActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         if (response != null ){
+                            raw = response.toString();
                             Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
                             httpResp.setText("Succ: " + response.toString());
                         }
@@ -111,6 +116,8 @@ public class profileActivity extends AppCompatActivity {
                     if (jsonString != null && jsonString.length() > 0)
                         result = new JSONObject(jsonString);
 
+
+                    //TODO: this is for http://localhost:8080/friends, so it return lists of user, if for single user, need rewrite parsing logic
                     JSONArray friends = result.getJSONObject("_embedded").getJSONArray("friends");
                     int len = friends.length();
                     JSONArray pending = new JSONArray();
@@ -141,6 +148,7 @@ public class profileActivity extends AppCompatActivity {
             }
         };
 
+        NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
 
 
         firstname = (EditText) findViewById(R.id.firstNameValue);

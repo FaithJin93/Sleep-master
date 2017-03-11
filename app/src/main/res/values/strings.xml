@@ -79,4 +79,6 @@
     </string-array>
     <string name="title_friendprofile_list">friendList</string>
     <string name="title_friendprofile_detail">friendProfile Detail</string>
+
+    <string name="emulator_localhost_API">http://10.0.2.2:8080</string>
 </resources>
