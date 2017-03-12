@@ -2,48 +2,34 @@ package com.scorpion.sleep;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Activity;
-import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Spinner;
-import android.widget.ImageView;
-import android.widget.BaseAdapter;
-import android.content.Context;
-import android.widget.ArrayAdapter;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.scorpion.sleep.util.NetworkManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 public class profileActivity extends AppCompatActivity {
 
@@ -56,7 +42,7 @@ public class profileActivity extends AppCompatActivity {
     private TextView httpResp;
 
     private String uid = "58c44144dd62294b320de5a5";
-//    private String steve_uid = "58c216cd160fe397212f4b3b";
+    private String steve_uid = "58c216cd160fe397212f4b3b";
     private String university = "University of Toronto";
     private String graduationYear = "2013";
     private String fn;
@@ -73,85 +59,6 @@ public class profileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setTitle("Personal Profile");
         _context = this;
-
-
-
-        String url = "http://10.0.2.2:8080/friends/";
-        Log.d(debug,"url "+url);
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url+uid,
-                new JSONObject(),
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if (response != null ){
-                            raw = response.toString();
-                            Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
-                            httpResp.setText("Succ: " + response.toString());
-                        }
-                        else{
-                            Log.d("Error","empty json response");
-                        }
-                    }
-                },
-                new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String LOG_TAG = "volley ppl post ";
-                        Log.d(LOG_TAG, "error with: " + error.getMessage());
-                        if (error.networkResponse != null)
-                            Log.i(LOG_TAG, "status code: " + error.networkResponse.statusCode);
-                        httpResp.setText(error.toString());
-                    }
-                }
-        ) {
-            @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-
-                    JSONObject result = null;
-
-                    if (jsonString != null && jsonString.length() > 0)
-                        result = new JSONObject(jsonString);
-
-
-                    //TODO: this is for http://localhost:8080/friends, so it return lists of user, if for single user, need rewrite parsing logic
-                    //JSONArray friends = result.getJSONArray("friends");
-                    //int len = friends.length();
-                    JSONArray pending = new JSONArray();
-                    JSONArray accepted = new JSONArray();
-
-                    //for (int i = 0; i < len; i ++ ){
-                        //JSONObject pairs = friends.getJSONObject(i);
-                        fn = result.getString("firstName");
-                        ln = result.getString("lastName");
-                        if (!result.get("email").equals(null))
-                            eml = result.getString("email");
-                        if (!result.get("pendingFriendList").equals(null) ){
-                            pending = result.getJSONArray("pendingFriendList");
-                        }
-                        if (!result.get("acceptedFriendList").equals(null) ){
-                            accepted = result.getJSONArray("acceptedFriendList");
-                        }
-                    JSONObject pairs = result.getJSONObject("_links");
-                    //}
-
-                    return Response.success(result,
-                            HttpHeaderParser.parseCacheHeaders(response));
-                } catch (UnsupportedEncodingException e) {
-                    return Response.error(new ParseError(e));
-                } catch (JSONException je) {
-                    je.printStackTrace();
-                    return Response.error(new ParseError(je));
-                }
-            }
-        };
-
-        NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
-
 
         firstname = (EditText) findViewById(R.id.firstNameValue);
         lastname = (EditText) findViewById(R.id.lastNameValue);
@@ -178,9 +85,8 @@ public class profileActivity extends AppCompatActivity {
             spinnerYear.setSelection(spinnerPosition);
         }
 
-        firstname.setText(fn);
-        lastname.setText(ln);
-        email.setText(eml);
+        sendSingleUserRequest();
+
 
         //firstname.setVisibility(View.INVISIBLE);
 
@@ -209,7 +115,7 @@ public class profileActivity extends AppCompatActivity {
 
                 NetworkManager.inst(_context.getApplicationContext()).submitRequest(request);
             }
-        });*/
+        });
 
         saveButton.setOnClickListener(new OnClickListener() {
 
@@ -286,7 +192,98 @@ public class profileActivity extends AppCompatActivity {
             }
         });
 
+       */
 
+    }
+
+
+    private void sendSingleUserRequest()
+    {
+
+        String url = "http://10.0.2.2:8080/friends/";
+        Log.d(debug,"url "+url);
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url+steve_uid,
+                new JSONObject(),
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null ){
+                            raw = response.toString();
+                            Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
+                            httpResp.setText("Succ: " + response.toString());
+                            try {
+                                firstname.setText("1"+response.getString("firstName"));
+                                lastname.setText("2"+response.getString("lastName"));
+                                email.setText("3"+response.getString("email"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else{
+                            Log.d("Error","empty json response");
+                        }
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String LOG_TAG = "volley ppl post ";
+                        if (error.networkResponse != null)
+                            Log.i(LOG_TAG, "status code: " + error.networkResponse.statusCode);
+                        httpResp.setText(error.toString());
+                    }
+                }
+        )
+
+        /*{
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                JSONObject result = null;
+                try {
+                    String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
+
+                    if (jsonString != null && jsonString.length() > 0)
+                        result = new JSONObject(jsonString);
+
+                    //TODO: this is for http://localhost:8080/friends, so it return lists of user, if for single user, need rewrite parsing logic
+                    JSONArray pending = new JSONArray();
+                    JSONArray accepted = new JSONArray();
+
+                    try {
+                        fn = result.getString("firstName");
+                        ln = result.getString("lastName");
+                        if (!result.get("email").equals(null))
+                            eml = result.getString("email");
+                        if (!result.get("pendingFriendList").equals(null)) {
+                            pending = result.getJSONArray("pendingFriendList");
+                        }
+                        if (!result.get("acceptedFriendList").equals(null)) {
+                            accepted = result.getJSONArray("acceptedFriendList");
+                        }
+                        JSONObject pairs = result.getJSONObject("_links");
+                    } catch (JSONException je){
+                        Log.e(debug,"inner json exception");
+                        je.printStackTrace();
+                    }
+
+                    return Response.success(result,
+                            HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (JSONException je) {
+                    Log.e(debug,"outter json exception");
+                    je.printStackTrace();
+                    return Response.success(result,
+                            HttpHeaderParser.parseCacheHeaders(response));
+                }
+            }
+        } */
+        ;
+
+        NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
 
     }
 
