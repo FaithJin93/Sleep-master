@@ -61,7 +61,7 @@ public class LoginActivity extends Activity{
             }
         }
         
-     // 登录监听事件  现在默认为用户名为：yubin 密码：123
+     //
         btn_login.setOnClickListener(new OnClickListener() {  
   
             public void onClick(final View v) {
@@ -70,7 +70,8 @@ public class LoginActivity extends Activity{
                 passwordValue = password.getText().toString();
 
 
-                // TODO
+                // TODO, change when we have actually LOG_IN implemented
+                userContext.setUID(UserContext.STEVE_UID);
                 Intent intent = new Intent(context, StartActivity.class);
                 startActivity(intent);
                 finish();

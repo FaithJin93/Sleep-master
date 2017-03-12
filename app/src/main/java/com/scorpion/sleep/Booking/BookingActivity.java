@@ -89,7 +89,7 @@ public class BookingActivity extends Activity implements Response.Listener<JSONA
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("uid", Integer.toString(UserContext.getUserContext(_context.getApplicationContext()).getUID()));
+                    params.put("uid", UserContext.getUserContext(_context.getApplicationContext()).getUID());
                     params.put("date", date);
                     params.put("timeslot_id", Integer.toString(timeId));
                     return params;

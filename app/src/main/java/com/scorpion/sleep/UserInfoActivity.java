@@ -64,7 +64,7 @@ public class UserInfoActivity extends Activity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("uid", Integer.toString(userContext.getUID()));
+                params.put("uid", (userContext.getUID()));
                 Log.d("TEST", "uid="+params.get("uid"));
                 return params;
             }

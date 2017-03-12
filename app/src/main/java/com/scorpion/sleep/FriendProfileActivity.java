@@ -11,7 +11,7 @@ public class FriendProfileActivity extends AppCompatActivity {
 
     private TextView httpResp;
 
-    private String uid ;
+    private String url ;
     private String name;
     private static final String debug = "DEBUG";
 
@@ -21,10 +21,10 @@ public class FriendProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profile);
-        setTitle(name);
+        setTitle(getIntent().getStringExtra("name"));
         _context = this;
 
-        uid = getIntent().getStringExtra("uid");
+        url = getIntent().getStringExtra("url");
 
     }
 }

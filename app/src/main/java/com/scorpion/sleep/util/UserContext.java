@@ -19,9 +19,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by stephen on 2015-10-24.
- */
 public class UserContext {
 
     private static final String USERNAME_KEY = "USERNAME_KEY";
@@ -30,6 +27,10 @@ public class UserContext {
     private static final String UID_KEY = "UID_KEY";
     private static final String SAVE_PW_KEY = "SAVE_PW_KEY";
     private static final String AUTOLOGIN_KEY = "AUTOLOGIN_KEY";
+
+    //TODO, need to remove hack when implemented true login
+    public static final String UID = "58c44144dd62294b320de5a5";
+    public static final String STEVE_UID = "58c216cd160fe397212f4b3b";
 
     private SharedPreferences prefs;
     private Context context;
@@ -54,7 +55,7 @@ public class UserContext {
     }
 
     public void setUserName(String userName) {
-        prefs.edit().putString(USERNAME_KEY, userName).commit();
+        prefs.edit().putString(USERNAME_KEY, userName).apply();
     }
 
     public String getUserPassword() {
@@ -62,7 +63,7 @@ public class UserContext {
     }
 
     public void setUserPassword(String userPassword) {
-        prefs.edit().putString(PASSWORD_KEY, userPassword).commit();
+        prefs.edit().putString(PASSWORD_KEY, userPassword).apply();
     }
 
     public void logout()
@@ -79,12 +80,12 @@ public class UserContext {
         prefs.edit().putString(TOKEN_KEY, userToken).commit();
     }
 
-    public void setUID(int id) {
-        prefs.edit().putInt(UID_KEY, id).commit();
+    public void setUID(String id) {
+        prefs.edit().putString(UID_KEY, id).commit();
     }
 
-    public int getUID() {
-        return prefs.getInt(UID_KEY, -1);
+    public String getUID() {
+        return prefs.getString(UID_KEY, "-1");
     }
 
     public boolean isUserLoggedIn() {
@@ -118,15 +119,15 @@ public class UserContext {
         StringRequest request = new StringRequest(Request.Method.POST, NetworkManager.LOGIN_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                int success = -1;
+                String success = "-1";
                 try {
-                    success = parseLoginSuccess(response);
+                    success = String.valueOf(parseLoginSuccess(response));
                 } catch (JSONException e) {
                     Toast.makeText(context, "Server response error!", Toast.LENGTH_SHORT).show();
                 }
 
                 setUID(success);
-                if (success >= 0) {
+                if (!success.equals("-1")) {
                     registerSession(callback);
                 } else {
                     logout();
@@ -212,7 +213,7 @@ public class UserContext {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", Integer.toString(getUID()));
+                params.put("id", getUID());
                 params.put("username", getUserName());
                 params.put("session", getUserToken());
                 Log.d("LOGIN-AUTH", "Params for mobile-login post");
