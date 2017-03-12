@@ -64,7 +64,7 @@ public class profileActivity extends AppCompatActivity {
         final Gson gson = new Gson();
 
         setUpUI();
-        getSingleUser(STEVE_UID,gson);
+        getSingleUser(UID,gson);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class profileActivity extends AppCompatActivity {
                 params.put("lastName", getLastName());
                 params.put("email", getEmail());
 
-                updateSingleUser(STEVE_UID, params);
+                updateSingleUser(UID, params);
 
             }
         });
@@ -270,11 +270,9 @@ public class profileActivity extends AppCompatActivity {
         return lastname.getText().toString();
     }
 
-    /*
     public String getEmail() {
         return email.getText().toString();
     }
-    */
 
     private void printParamsLog(Map<String, String> params) {
         for (String s : params.keySet()) {
