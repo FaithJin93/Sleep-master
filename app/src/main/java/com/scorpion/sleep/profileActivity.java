@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -62,24 +64,22 @@ public class profileActivity extends AppCompatActivity {
         final Gson gson = new Gson();
 
         setUpUI();
-        getSingleUser(UID,gson);
+        getSingleUser(STEVE_UID,gson);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 HashMap<String, String> params = new HashMap<String, String>();
-                params.put("firstName",getFirstName());
-                params.put("lastName",getLastName());
-                params.put("email",getEmail());
+                params.put("firstName", getFirstName());
+                params.put("lastName", getLastName());
+                params.put("email", getEmail());
 
-                updateSingleUser(UID, params);
+                updateSingleUser(STEVE_UID, params);
 
             }
         });
 
     }
-
-
 
     private void updateSingleUser(String uid, final HashMap params ){
                 JsonObjectRequest jsonRequest = new JsonObjectRequest(
@@ -90,22 +90,18 @@ public class profileActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 if (response != null ){
-                                    Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
                                     httpResp.setText("Succ: " + response.toString());
                                 }
                                 else{
-                                    Log.d("Error","empty json response");
+                                    Log.d("CRUD","expected empty json response");
                                 }
                             }
                         },
                         new Response.ErrorListener(){
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                String LOG_TAG = "volley ppl post ";
-                                Log.d(LOG_TAG, "error with: " + error.getMessage());
-                                if (error.networkResponse != null)
-                                    Log.i(LOG_TAG, "status code: " + error.networkResponse.statusCode);
-                                httpResp.setText(error.toString());
+                                String err_str = handleErrorResponse(error);
+                                httpResp.setText(err_str);
                             }
                         }
                 ) {
@@ -160,9 +156,8 @@ public class profileActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        if (error.networkResponse != null)
-                            Log.d(LOG_TAG, "status code: " + error.networkResponse.statusCode + error.getMessage());
-                        httpResp.setText(error.toString());
+                        String err_str = handleErrorResponse(error);
+                        httpResp.setText(err_str);
                     }
                 }
         ) {
@@ -189,6 +184,45 @@ public class profileActivity extends AppCompatActivity {
         manager.submitRequest(singleU);
     }
 
+    private String handleErrorResponse(VolleyError error) {
+        NetworkResponse networkR = error.networkResponse;
+        String defaultError = "Unkown error";
+        if (networkR == null){
+            if (error.getClass().equals(TimeoutError.class))
+                defaultError = "Request Timeout";
+            else if (error.getClass().equals(NoConnectionError.class))
+                defaultError = "Failed to connect server";
+        } else {
+            String result = new String(networkR.data);
+            try {
+                JSONObject response = new JSONObject(result);
+                String status = response.getString("status");
+                String message = response.getString("message");
+                Log.e(DEBUG,"status: "+status + " message: "+message);
+
+                switch (networkR.statusCode){
+                    case 404:
+                        defaultError = "User Not Found";
+                        break;
+                    case 401:
+                        defaultError = "Please Log In Again";
+                        break;
+                    case 400:
+                        defaultError = "Check Your Input";
+                        break;
+                    case 500:
+                        defaultError = "Internal Server Error, Something is Going Wrong";
+                        break;
+                }
+            } catch (JSONException je){
+                je.printStackTrace();
+            }
+        }
+        error.printStackTrace();
+        Log.d(LOG_TAG, defaultError);
+        return defaultError;
+    }
+
     private void handleResponse(JSONObject response) {
         // debug only, can set invisible if needed
         Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
@@ -203,9 +237,8 @@ public class profileActivity extends AppCompatActivity {
         firstname = (EditText) findViewById(R.id.firstNameValue);
         lastname  = (EditText) findViewById(R.id.lastNameValue);
         email  = (EditText) findViewById(R.id.emailValue);
-        httpResp = (TextView) findViewById(R.id.emailValue);
+        httpResp = (TextView) findViewById(R.id.httpResp);
         saveButton = (Button) findViewById(R.id.saveButton);
-
 
         Spinner spinnerUniversity = (Spinner) findViewById(R.id.universityList);
         ArrayAdapter<CharSequence> adapterUniversity = ArrayAdapter.createFromResource(this,R.array.universityArray,android.R.layout.simple_spinner_item);
