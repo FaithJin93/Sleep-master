@@ -30,22 +30,23 @@ import com.google.gson.Gson;
 
 public class profileActivity extends AppCompatActivity {
 
-
     private EditText firstname;
     private EditText lastname;
     private Button saveButton;
     private Button postButton;
     private TextView httpResp;
 
-    private String uid = "58c44144dd62294b320de5a5";
-    private String steve_uid = "58c216cd160fe397212f4b3b";
-    private String university = "University of Toronto";
-    private String graduationYear = "2013";
-    private String fn;
-    private String ln;
-    private static final String debug = "DEBUG";
+    // For any hardcoded value, use final help its immutability, and name variable in all CAPS
+    private static final String EMULATOR_LOCAL_API = "http://10.0.2.2:8080/friends/" ;
+    private static final String UID = "58c44144dd62294b320de5a5";
+    private static final String STEVE_UID = "58c216cd160fe397212f4b3b";
+    private static final String DEFAULT_UNIVERSITY = "University of Toronto";
+    private static final String DEFAULT_GRADUATION_YEAR = "2013";
+
+    // Log Flags
+    private static final String DEBUG = "DEBUG";
+    private static final String LOG_TAG = "volley ppl post ";
     private String email;
-    private String raw =null;
     private Friends owner;
 
     private Context _context;
@@ -57,66 +58,15 @@ public class profileActivity extends AppCompatActivity {
         setTitle("Personal Profile");
         _context = this;
         final Gson gson = new Gson();
-        //Added By Steve
 
-         String su_url = "http://10.0.2.2:8080/friends/" + steve_uid;
-        JsonObjectRequest singleU = new JsonObjectRequest(
-                Request.Method.GET,
-                su_url,
-                new JSONObject(),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if (response != null) {
-                            raw = response.toString();
-                            Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
-                            httpResp.setText("Succ: " + response.toString());
-                        } else {
-                            Log.d("Error", "empty json response");
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            String LOG_TAG = "volley ppl post ";
-                            Log.d(LOG_TAG, "error with: " + error.getMessage());
-                            if (error.networkResponse != null)
-                                Log.i(LOG_TAG, "status code: " + error.networkResponse.statusCode);
-                            httpResp.setText(error.toString());
-                        }
-                    }
-        ) {
-            @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
+        setUpUI();
+        getSingleUser(STEVE_UID,gson);
 
-                    JSONObject result = null;
-
-                    if (jsonString != null && jsonString.length() > 0){
-                        owner = gson.fromJson(jsonString,Friends.class);
-                        result = new JSONObject(jsonString);
-                    }
-
-                    return Response.success(result,
-                            HttpHeaderParser.parseCacheHeaders(response));
-                } catch (UnsupportedEncodingException e) {
-                    return Response.error(new ParseError(e));
-                } catch (JSONException je) {
-                    return Response.error(new ParseError(je));
-                }
-            }
-        };
-        NetworkManager.inst(_context.getApplicationContext()).submitRequest(singleU);
-
-        Log.d(debug,"Owner: "+owner.getFirstName() + owner.getLastName() + owner.getEmail());
 
         //Added By Steve END
         /*
         String url = "http://10.0.2.2:8080/friends";
-        Log.d(debug,"url "+url);
+        Log.d(DEBUG,"url "+url);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -192,32 +142,9 @@ public class profileActivity extends AppCompatActivity {
         */
 
 
-        firstname = (EditText) findViewById(R.id.firstNameValue);
-        lastname = (EditText) findViewById(R.id.lastNameValue);
         //saveButton = (Button) findViewById(R.id.saveButton);
         //postButton = (Button) findViewById(R.id.postButton);
-        httpResp = (TextView) findViewById(R.id.httpResp);
 
-        Spinner spinnerUniversity = (Spinner) findViewById(R.id.universityList);
-        ArrayAdapter<CharSequence> adapterUniversity = ArrayAdapter.createFromResource(this,R.array.universityArray,android.R.layout.simple_spinner_item);
-        adapterUniversity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerUniversity.setAdapter(adapterUniversity);
-        if (!university.equals(null)) {
-            int spinnerPosition = adapterUniversity.getPosition(university);
-            spinnerUniversity.setSelection(spinnerPosition);
-        }
-
-        Spinner spinnerYear = (Spinner) findViewById(R.id.graduationYearList);
-        ArrayAdapter<CharSequence> adapterYear = ArrayAdapter.createFromResource(this,R.array.yearArray,android.R.layout.simple_spinner_item);
-        adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerYear.setAdapter(adapterYear);
-        if (!graduationYear.equals(null)) {
-            int spinnerPosition = adapterYear.getPosition(graduationYear);
-            spinnerYear.setSelection(spinnerPosition);
-        }
-
-        firstname.setText(fn);
-        lastname.setText(ln);
 
         //firstname.setVisibility(View.INVISIBLE);
 
@@ -326,6 +253,94 @@ public class profileActivity extends AppCompatActivity {
 
     }
 
+    private void getSingleUser(String uid, final Gson gson) {
+        final NetworkManager manager = NetworkManager.inst(_context.getApplicationContext());
+
+        // VERY IMPORTANT: the volley request is Asynchronous, we must put view change inside onResponse function
+        String su_url = EMULATOR_LOCAL_API + uid;
+        JsonObjectRequest singleU = new JsonObjectRequest(
+                Request.Method.GET,
+                su_url,
+                new JSONObject(),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null) {
+                            handleResponse(response);
+                        } else {
+                            Log.d("Error", "empty json response");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null)
+                            Log.d(LOG_TAG, "status code: " + error.networkResponse.statusCode + error.getMessage());
+                        httpResp.setText(error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
+                    JSONObject result = null;
+                    if (jsonString.length() > 0){
+                        owner = gson.fromJson(jsonString,Friends.class);
+                        result = new JSONObject(jsonString);
+                    }
+
+                    return Response.success(result,
+                            HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (JSONException je) {
+                    return Response.error(new ParseError(je));
+                }
+            }
+        };
+        manager.submitRequest(singleU);
+    }
+
+    private void handleResponse(JSONObject response) {
+        // debug only, can set invisible if needed
+        Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
+        Log.d(DEBUG,"Owner: "+owner.getFirstName() + owner.getLastName() + owner.getEmail());
+        // debug only, can set invisible if needed
+        httpResp.setText("Succ: " + response.toString());
+        firstname.setText(owner.getFirstName());
+        lastname.setText(owner.getLastName());
+    }
+
+    private void setUpUI() {
+        firstname = (EditText) findViewById(R.id.firstNameValue);
+        lastname  = (EditText) findViewById(R.id.lastNameValue);
+        httpResp  = (TextView) findViewById(R.id.httpResp);
+
+        Spinner spinnerUniversity = (Spinner) findViewById(R.id.universityList);
+        ArrayAdapter<CharSequence> adapterUniversity = ArrayAdapter.createFromResource(this,R.array.universityArray,android.R.layout.simple_spinner_item);
+        adapterUniversity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        assert spinnerUniversity != null;
+        spinnerUniversity.setAdapter(adapterUniversity);
+        if (!DEFAULT_UNIVERSITY.equals(null)) {
+            int spinnerPosition = adapterUniversity.getPosition(DEFAULT_UNIVERSITY);
+            spinnerUniversity.setSelection(spinnerPosition);
+        }
+
+        Spinner spinnerYear = (Spinner) findViewById(R.id.graduationYearList);
+        ArrayAdapter<CharSequence> adapterYear = ArrayAdapter.createFromResource(this,R.array.yearArray,android.R.layout.simple_spinner_item);
+        adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        assert spinnerYear != null;
+        spinnerYear.setAdapter(adapterYear);
+        if (!DEFAULT_GRADUATION_YEAR.equals(null)) {
+            int spinnerPosition = adapterYear.getPosition(DEFAULT_GRADUATION_YEAR);
+            spinnerYear.setSelection(spinnerPosition);
+        }
+    }
+
+    // Those 2 functions might be helpful if update values/PATCH
     public String getFirstName() {
         return firstname.getText().toString();
     }
