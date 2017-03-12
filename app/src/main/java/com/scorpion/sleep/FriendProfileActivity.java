@@ -23,5 +23,8 @@ public class FriendProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friend_profile);
         setTitle(name);
         _context = this;
+
+        uid = getIntent().getStringExtra("uid");
+
     }
 }

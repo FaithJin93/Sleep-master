@@ -85,7 +85,7 @@ public class friendList extends AppCompatActivity {
                     Toast.makeText(mcontext, item, Toast.LENGTH_LONG).show();
 
                     Intent myIntent = new Intent(mcontext, FriendProfileActivity.class);
-                    myIntent.putExtra("uid", 666);
+                    myIntent.putExtra("uid", "666");
                     startActivity(myIntent);
                 }
             });
