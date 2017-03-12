@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.scorpion.sleep.util.AddFriendAdapter;
-import com.scorpion.sleep.util.FriendListAdapter;
 
 public class AddFriendActivity extends AppCompatActivity {
     private RecyclerView addFriendView;

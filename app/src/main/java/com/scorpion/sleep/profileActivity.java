@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -25,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.Gson;
 
@@ -32,9 +35,9 @@ public class profileActivity extends AppCompatActivity {
 
     private EditText firstname;
     private EditText lastname;
-    private Button saveButton;
-    private Button postButton;
+    private EditText email;
     private TextView httpResp;
+    private Button saveButton;
 
     // For any hardcoded value, use final help its immutability, and name variable in all CAPS
     private static final String EMULATOR_LOCAL_API = "http://10.0.2.2:8080/friends/" ;
@@ -46,7 +49,6 @@ public class profileActivity extends AppCompatActivity {
     // Log Flags
     private static final String DEBUG = "DEBUG";
     private static final String LOG_TAG = "volley ppl post ";
-    private String email;
     private Friends owner;
 
     private Context _context;
@@ -60,120 +62,29 @@ public class profileActivity extends AppCompatActivity {
         final Gson gson = new Gson();
 
         setUpUI();
-        getSingleUser(STEVE_UID,gson);
+        getSingleUser(UID,gson);
 
-
-        //Added By Steve END
-        /*
-        String url = "http://10.0.2.2:8080/friends";
-        Log.d(DEBUG,"url "+url);
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                new JSONObject(),
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if (response != null ){
-                            raw = response.toString();
-                            Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
-                            httpResp.setText("Succ: " + response.toString());
-                        }
-                        else{
-                            Log.d("Error","empty json response");
-                        }
-                    }
-                },
-                new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String LOG_TAG = "volley ppl post ";
-                        Log.d(LOG_TAG, "error with: " + error.getMessage());
-                        if (error.networkResponse != null)
-                            Log.i(LOG_TAG, "status code: " + error.networkResponse.statusCode);
-                        httpResp.setText(error.toString());
-                    }
-                }
-        ) {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-                    JSONObject result = null;
-                    if (jsonString != null && jsonString.length() > 0)
-                        result = new JSONObject(jsonString);
-                    //TODO: this is for http://localhost:8080/friends, so it return lists of user, if for single user, need rewrite parsing logic
-                    JSONArray friends = result.getJSONObject("_embedded").getJSONArray("friends");
-                    int len = friends.length();
-                    JSONArray pending = new JSONArray();
-                    JSONArray accepted = new JSONArray();
-                    System.out.println("Starts");
-                    for (int i = 0; i < len; i ++ ){
-                        JSONObject pairs = friends.getJSONObject(i);
-                        fn = pairs.getString("firstName");
-                        ln = pairs.getString("lastName");
-                        if (!pairs.get("email").equals(null))
-                            email = pairs.getString("email");
-                        if (!pairs.get("pendingFriendList").equals(null) ){
-                            pending = pairs.getJSONArray("pendingFriendList");
-                        }
-                        if (!pairs.get("acceptedFriendList").equals(null) ){
-                            accepted = pairs.getJSONArray("acceptedFriendList");
-                        }
-                    }
-                    return Response.success(result,
-                            HttpHeaderParser.parseCacheHeaders(response));
-                } catch (UnsupportedEncodingException e) {
-                    return Response.error(new ParseError(e));
-                } catch (JSONException je) {
-                    return Response.error(new ParseError(je));
-                }
-            }
-        };
-        NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
-        */
-
-
-        //saveButton = (Button) findViewById(R.id.saveButton);
-        //postButton = (Button) findViewById(R.id.postButton);
-
-
-        //firstname.setVisibility(View.INVISIBLE);
-
-        /*saveButton.setOnClickListener(new OnClickListener() {
-            public void onClick(final View view) {
-                String url = "http://104.131.60.15:8080/people";
-                StringRequest request = new StringRequest(Request.Method.GET,
-                        url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Toast.makeText(_context, response, Toast.LENGTH_SHORT).show();
-                                httpResp.setText(response);
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("Volley", error.toString());
-                                httpResp.setText(error.toString());
-                            }
-                        });
-                NetworkManager.inst(_context.getApplicationContext()).submitRequest(request);
-            }
-        });
-        postButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "http://104.131.60.15:8080/people";
+            public void onClick(View view){
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("firstName",getFirstName());
                 params.put("lastName",getLastName());
-                printParamsLog(params);
+                params.put("email",getEmail());
+
+                updateSingleUser(UID, params);
+
+            }
+        });
+
+    }
+
+
+
+    private void updateSingleUser(String uid, final HashMap params ){
                 JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                        Request.Method.POST,
-                        url,
+                        Request.Method.PATCH,
+                        EMULATOR_LOCAL_API+uid,
                         new JSONObject(params),
                         new Response.Listener<JSONObject>(){
                             @Override
@@ -182,7 +93,7 @@ public class profileActivity extends AppCompatActivity {
                                     Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
                                     httpResp.setText("Succ: " + response.toString());
                                 }
-                                 else{
+                                else{
                                     Log.d("Error","empty json response");
                                 }
                             }
@@ -225,11 +136,6 @@ public class profileActivity extends AppCompatActivity {
                     }
                 };
                 NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
-            }
-        });*/
-
-
-
     }
 
     private void getSingleUser(String uid, final Gson gson) {
@@ -288,15 +194,18 @@ public class profileActivity extends AppCompatActivity {
         Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
         Log.d(DEBUG,"Owner: "+owner.getFirstName() + owner.getLastName() + owner.getEmail());
         // debug only, can set invisible if needed
-        httpResp.setText("Succ: " + response.toString());
         firstname.setText(owner.getFirstName());
         lastname.setText(owner.getLastName());
+        email.setText(owner.getEmail());
     }
 
     private void setUpUI() {
         firstname = (EditText) findViewById(R.id.firstNameValue);
         lastname  = (EditText) findViewById(R.id.lastNameValue);
-        httpResp  = (TextView) findViewById(R.id.httpResp);
+        email  = (EditText) findViewById(R.id.emailValue);
+        httpResp = (TextView) findViewById(R.id.emailValue);
+        saveButton = (Button) findViewById(R.id.saveButton);
+
 
         Spinner spinnerUniversity = (Spinner) findViewById(R.id.universityList);
         ArrayAdapter<CharSequence> adapterUniversity = ArrayAdapter.createFromResource(this,R.array.universityArray,android.R.layout.simple_spinner_item);
@@ -326,6 +235,10 @@ public class profileActivity extends AppCompatActivity {
 
     public String getLastName() {
         return lastname.getText().toString();
+    }
+
+    public String getEmail() {
+        return email.getText().toString();
     }
 
     private void printParamsLog(Map<String, String> params) {
