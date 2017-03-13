@@ -24,7 +24,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textSize="17sp"
-        android:text="Add"
+        android:text="Invite"
         />
 
 </LinearLayout>
