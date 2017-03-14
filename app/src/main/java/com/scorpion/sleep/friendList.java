@@ -126,7 +126,7 @@ public class friendList extends AppCompatActivity {
                     int itemPosition = friendListView.getChildLayoutPosition(view);
                     Friends thisFriend = friendList.get(itemPosition);
                     String item = thisFriend.getLinks().getSelf().getHref();
-                    String thisName = thisFriend.getFirstName() + " " + thisFriend.getFirstName();
+                    String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
                     Toast.makeText(mcontext, item, Toast.LENGTH_LONG).show();
 
                     Intent myIntent = new Intent(mcontext, FriendProfileActivity.class);

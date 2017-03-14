@@ -15,6 +15,16 @@ public class Friends {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("graduationYear")
+    @Expose
+    private int graduationYear;
+    @SerializedName("university")
+    @Expose
+    private String university;
+    @SerializedName("major")
+    @Expose
+    private String major;
+
     @SerializedName("acceptedFriendList")
     @Expose
     private List<String> acceptedFriendList = null;
@@ -75,4 +85,27 @@ public class Friends {
         this.links = links;
     }
 
+    public int getGraduationYear() {
+        return graduationYear;
+    }
+
+    public void setGraduationYear(int graduationYear) {
+        this.graduationYear = graduationYear;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
 }

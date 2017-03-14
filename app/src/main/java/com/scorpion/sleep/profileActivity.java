@@ -25,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.scorpion.sleep.Model.Friends;
 import com.scorpion.sleep.util.NetworkManager;
+import com.scorpion.sleep.util.UserContext;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,8 +44,6 @@ public class profileActivity extends AppCompatActivity {
 
     // For any hardcoded value, use final help its immutability, and name variable in all CAPS
     private static final String EMULATOR_LOCAL_API = "http://10.0.2.2:8080/friends/" ;
-    private static final String UID = "58c44144dd62294b320de5a5";
-    private static final String STEVE_UID = "58c216cd160fe397212f4b3b";
     private static final String DEFAULT_UNIVERSITY = "University of Toronto";
     private static final String DEFAULT_GRADUATION_YEAR = "2013";
 
@@ -62,9 +61,10 @@ public class profileActivity extends AppCompatActivity {
         setTitle("Personal Profile");
         _context = this;
         final Gson gson = new Gson();
+        final UserContext userContext = UserContext.getUserContext(_context.getApplicationContext());
 
         setUpUI();
-        getSingleUser(UID,gson);
+        getSingleUser(userContext.getUID(),gson);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class profileActivity extends AppCompatActivity {
                 params.put("lastName", getLastName());
                 params.put("email", getEmail());
 
-                updateSingleUser(UID, params);
+                updateSingleUser(userContext.getUID(), params);
 
             }
         });
