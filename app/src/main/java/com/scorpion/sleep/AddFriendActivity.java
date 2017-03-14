@@ -126,7 +126,7 @@ public class AddFriendActivity extends AppCompatActivity {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             Friends thisFriend = addFriendList.get(position);
-            String thisName = thisFriend.getFirstName() + " " + thisFriend.getFirstName();
+            String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
             holder.FriendName.setText(thisName);
             holder.ButtonText.setText("Add");
         }

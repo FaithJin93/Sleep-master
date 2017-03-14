@@ -1,21 +1,28 @@
 package com.scorpion.sleep;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.*;
-import com.android.volley.*;
+import android.widget.TextView;
+
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.scorpion.sleep.Model.Friends;
 import com.scorpion.sleep.util.NetworkManager;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 public class FriendProfileActivity extends AppCompatActivity {
 
@@ -26,7 +33,6 @@ public class FriendProfileActivity extends AppCompatActivity {
     private TextView graduationYearList;
     private String url;
 
-    private static final String EMULATOR_LOCAL_API = "http://10.0.2.2:8080/friends/" ;
     private static final String DEFAULT_UNIVERSITY = "University of Toronto";
     private static final String DEFAULT_GRADUATION_YEAR = "2013";
     private static final String DEBUG = "DEBUG";
@@ -140,13 +146,14 @@ public class FriendProfileActivity extends AppCompatActivity {
     private void handleResponse(JSONObject response) {
         // debug only, can set invisible if needed
         //Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
-        Log.d(DEBUG,"Owner: "+owner.getFirstName() + owner.getLastName() + owner.getEmail());
+        Log.d(DEBUG, "Owner: " + owner.getFirstName() + owner.getLastName() + owner.getEmail());
         // debug only, can set invisible if needed
         firstname.setText(owner.getFirstName());
         lastname.setText(owner.getLastName());
         email.setText(owner.getEmail());
-        universityList.setText(DEFAULT_UNIVERSITY);
-        graduationYearList.setText(DEFAULT_GRADUATION_YEAR);
+        if (!owner.getUniversity().equals(null))
+            universityList.setText(owner.getUniversity());
+        graduationYearList.setText(String.valueOf(owner.getGraduationYear()));
     }
 
     private void setUpUI() {

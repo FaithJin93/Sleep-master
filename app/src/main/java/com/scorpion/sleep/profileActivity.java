@@ -231,6 +231,11 @@ public class profileActivity extends AppCompatActivity {
         firstname.setText(owner.getFirstName());
         lastname.setText(owner.getLastName());
         email.setText(owner.getEmail());
+        //TODO, faith change what ever you want
+        //if (!owner.getUniversity().equals(null))
+        //    universityList.setText(owner.getUniversity());
+        //graduationYearList.setText(String.valueOf(owner.getGraduationYear()));
+
     }
 
     private void setUpUI() {
