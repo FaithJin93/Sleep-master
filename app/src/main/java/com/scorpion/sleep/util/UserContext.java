@@ -30,7 +30,11 @@ public class UserContext {
 
     //TODO, need to remove hack when implemented true login
     public static final String UID = "58c44144dd62294b320de5a5";
-    public static final String STEVE_UID = "58c216cd160fe397212f4b3b";
+    public static final String STEVE_LOCAL_UID = "58c216cd160fe397212f4b3b";
+    public static final String STEVE_UID = "58c219d76c934d0651fea371";
+
+    public static final String EMULATOR_LOCAL_API = "http://10.0.2.2:8080/friends/" ;
+    public static final String HW_REMOTE_API = "http://104.131.60.15:8080/friends/" ;
 
     private SharedPreferences prefs;
     private Context context;

@@ -150,7 +150,7 @@ public class FriendProfileActivity extends AppCompatActivity {
         firstname.setText(owner.getFirstName());
         lastname.setText(owner.getLastName());
         email.setText(owner.getEmail());
-        if (!owner.getUniversity().equals(null))
+        if (owner.getUniversity()!=null && !owner.getUniversity().equals(null))
             universityList.setText(owner.getUniversity());
         graduationYearList.setText(String.valueOf(owner.getGraduationYear()));
     }

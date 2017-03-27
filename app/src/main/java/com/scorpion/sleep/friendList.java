@@ -45,7 +45,6 @@ public class friendList extends AppCompatActivity {
 
     // For any hardcoded value, use final help its immutability, and name variable in all CAPS
     // to change default UID, go LoginActivity.java LINE74
-    private static final String EMULATOR_LOCAL_API = "http://10.0.2.2:8080/friends/" ;
     private static String owner_UID;
 
     // Log Flags
@@ -164,7 +163,7 @@ public class friendList extends AppCompatActivity {
         final NetworkManager manager = NetworkManager.inst(_context.getApplicationContext());
 
         // VERY IMPORTANT: the volley request is Asynchronous, we must put view change inside onResponse function
-        String su_url = EMULATOR_LOCAL_API + uid;
+        String su_url = UserContext.HW_REMOTE_API + uid;
         JsonObjectRequest singleU = new JsonObjectRequest(
                 Request.Method.GET,
                 su_url,

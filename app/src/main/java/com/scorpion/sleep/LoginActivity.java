@@ -71,7 +71,7 @@ public class LoginActivity extends Activity{
 
 
                 // TODO, change when we have actually LOG_IN implemented
-                userContext.setUID(UserContext.UID);
+                userContext.setUID(UserContext.STEVE_UID);
                 Intent intent = new Intent(context, StartActivity.class);
                 startActivity(intent);
                 finish();

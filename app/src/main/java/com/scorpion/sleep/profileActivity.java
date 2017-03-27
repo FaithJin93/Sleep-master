@@ -43,7 +43,6 @@ public class profileActivity extends AppCompatActivity {
     private Button saveButton;
 
     // For any hardcoded value, use final help its immutability, and name variable in all CAPS
-    private static final String EMULATOR_LOCAL_API = "http://10.0.2.2:8080/friends/" ;
     private static final String DEFAULT_UNIVERSITY = "University of Toronto";
     private static final String DEFAULT_GRADUATION_YEAR = "2013";
 
@@ -84,7 +83,7 @@ public class profileActivity extends AppCompatActivity {
     private void updateSingleUser(String uid, final HashMap params ){
                 JsonObjectRequest jsonRequest = new JsonObjectRequest(
                         Request.Method.PATCH,
-                        EMULATOR_LOCAL_API+uid,
+                        UserContext.HW_REMOTE_API+uid,
                         new JSONObject(params),
                         new Response.Listener<JSONObject>(){
                             @Override
@@ -138,7 +137,7 @@ public class profileActivity extends AppCompatActivity {
         final NetworkManager manager = NetworkManager.inst(_context.getApplicationContext());
 
         // VERY IMPORTANT: the volley request is Asynchronous, we must put view change inside onResponse function
-        String su_url = EMULATOR_LOCAL_API + uid;
+        String su_url = UserContext.HW_REMOTE_API + uid;
         JsonObjectRequest singleU = new JsonObjectRequest(
                 Request.Method.GET,
                 su_url,
@@ -225,7 +224,7 @@ public class profileActivity extends AppCompatActivity {
 
     private void handleResponse(JSONObject response) {
         // debug only, can set invisible if needed
-        Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
         Log.d(DEBUG,"Owner: "+owner.getFirstName() + owner.getLastName() + owner.getEmail());
         // debug only, can set invisible if needed
         firstname.setText(owner.getFirstName());
