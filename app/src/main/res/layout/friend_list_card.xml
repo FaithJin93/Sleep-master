@@ -7,9 +7,19 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="1dp"
-    android:paddingBottom="1dp"
+    android:padding="16dp"
     >
+        <FrameLayout
+            android:layout_marginRight="16dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/imageView"/>
+
+        </FrameLayout>
 
         <TextView
             android:layout_gravity="center"
@@ -17,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:textSize="50dp"
+            android:textSize="30dp"
             android:text="SBs"
             android:layout_weight="1"
             />

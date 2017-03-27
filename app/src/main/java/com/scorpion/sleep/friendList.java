@@ -2,6 +2,7 @@ package com.scorpion.sleep;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -94,10 +98,12 @@ public class friendList extends AppCompatActivity {
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
             public TextView FriendName;
+            public ImageView avatar;
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 FriendName = (TextView) itemView.findViewById(R.id.friendName);
+                avatar     = (ImageView) itemView.findViewById(R.id.imageView);
             }
         }
 
@@ -136,8 +142,7 @@ public class friendList extends AppCompatActivity {
             });
             // set the view's size, margins, paddings and layout parameters
 
-            ViewHolder vh = new ViewHolder(contactView);
-            return vh;
+            return new ViewHolder(contactView);
         }
 
         // Replace the contents of a view (invoked by the layout manager)
@@ -146,8 +151,20 @@ public class friendList extends AppCompatActivity {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             Friends thisFriend = friendList.get(position);
+
             String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
+
+            ColorGenerator generator = ColorGenerator.MATERIAL;
+            // generate color based on name, so it will always have name,color relation
+            int color = generator.getColor(thisName);
+
+            String lastnameCapital = thisFriend.getLastName().substring(0, 1).toUpperCase();
+
+            TextDrawable drawable = TextDrawable.builder()
+                    .buildRound(lastnameCapital, color);
+
             holder.FriendName.setText(thisName);
+            holder.avatar.setImageDrawable(drawable);
 
         }
 
