@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -39,17 +38,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class AddFriendActivity extends AppCompatActivity {
-    private RecyclerView addFriendView;
+public class RecommendationActivity extends AppCompatActivity {
+    private RecyclerView recommendationView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<String> m_acceptedFriendList;
-    private List<String> m_pendingFriendList;
-    private List<Friends> pendingFriendList;
-    private Button addButton;
-    private Button deleteButton;
+    private List<String> m_recommendationList;
+    private List<Friends> recommendationList;
+    private Button inviteButton;
     private TextView httpResp;
 
     // For any hardcoded value, use final help its immutability, and name variable in all CAPS
@@ -66,73 +62,64 @@ public class AddFriendActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_friend);
-        setTitle("Pending Friend");
+        setContentView(R.layout.activity_recommendation);
+        setTitle("Recommended Friend");
         _context = this;
         final Gson gson = new Gson();
         final UserContext userContext = UserContext.getUserContext(_context.getApplicationContext());
         owner_UID = userContext.getUID();
 
         // Lookup the recyclerview in activity layout
-        addFriendView = (RecyclerView) findViewById(R.id.add_friend_recycler_view);
+        recommendationView = (RecyclerView) findViewById(R.id.recommendation_friend_recycler_view);
         httpResp = (TextView) findViewById(R.id.httpResp);
 
-        getSingleUser(owner_UID, gson, true);
+        getSingleUser(owner_UID, gson);
         // use a linear layout manager
-        //mLayoutManager = new LinearLayoutManager(this);
-        //mRecyclerView.setLayoutManager(mLayoutManager);
 
-        pendingFriendList = new ArrayList<>();
-        m_pendingFriendList = new ArrayList<>();
-        m_acceptedFriendList = new ArrayList<>();
+        m_recommendationList = new ArrayList<>();
+        recommendationList = new ArrayList<>();
         // specify an adapter (see also next example)
-        mAdapter = new AddFriendAdapter(this, pendingFriendList);
-        addFriendView.setAdapter(mAdapter);
-        addFriendView.setLayoutManager(new LinearLayoutManager(this));
-
+        mAdapter = new RecommendationActivity.RecommendationAdapter(this, recommendationList);
+        recommendationView.setAdapter(mAdapter);
+        recommendationView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.ViewHolder> {
-        private List<Friends> addFriendList;
+    public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.ViewHolder> {
+        private List<Friends> recommendationList;
         private Context mcontext;
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             // each data item is just a string in this case
             public TextView FriendName;
-            public TextView ButtonText;
             public ImageView avatar;
 
             public ViewHolder(View itemView) {
                 super(itemView);
 
-                FriendName = (TextView) itemView.findViewById(R.id.add_friend_name);
+                FriendName = (TextView) itemView.findViewById(R.id.invite_friend_name);
                 avatar     = (ImageView) itemView.findViewById(R.id.imageView);
-                addButton  = (Button) itemView.findViewById(R.id.add_button);
-                addButton.setOnClickListener(this);
-                deleteButton  = (Button) itemView.findViewById(R.id.add_button);
-                deleteButton.setOnClickListener(this);
+                inviteButton  = (Button) itemView.findViewById(R.id.invite_button);
+                inviteButton.setOnClickListener(this);
             }
 
             @Override
             public void onClick(View v) {
                 int itemPosition = getAdapterPosition();
-                Friends thisFriend = addFriendList.get(itemPosition);
+                Friends thisFriend = recommendationList.get(itemPosition);
                 String item = thisFriend.getLinks().getSelf().getHref();
                 int index=item.lastIndexOf('/');
                 String uid = item.substring(index+1);
-                if (v.getId() == addButton.getId()) {
+                if (v.getId() == inviteButton.getId()) {
                     //Toast.makeText(v.getContext(), "works", Toast.LENGTH_SHORT).show();
-                    changeFriendList(true, uid);
+                    sendInvitation(uid);
                 }
-                else if (v.getId() == deleteButton.getId())
-                    changeFriendList(false, uid);
             }
         }
 
         // Provide a suitable constructor (depends on the kind of dataset)
-        public AddFriendAdapter(Context contexts, List<Friends> friendList) {
+        public RecommendationAdapter(Context contexts, List<Friends> recommendationList) {
             this.mcontext = contexts;
-            this.addFriendList = friendList;
+            this.recommendationList = recommendationList;
         }
 
         private Context getContext(){
@@ -140,23 +127,23 @@ public class AddFriendActivity extends AppCompatActivity {
         }
         // Create new views (invoked by the layout manager)
         @Override
-        public AddFriendAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                              int viewType) {
+        public RecommendationAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                                int viewType) {
             // create a new view
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
 
-            View contactView = inflater.inflate(R.layout.add_friend_item, parent, false);
+            View contactView = inflater.inflate(R.layout.recommendation_item, parent, false);
 
             contactView.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View view) {
-                    int itemPosition = addFriendView.getChildLayoutPosition(view);
-                    Friends thisFriend = addFriendList.get(itemPosition);
+                    int itemPosition = recommendationView.getChildLayoutPosition(view);
+                    Friends thisFriend = recommendationList.get(itemPosition);
                     String item = thisFriend.getLinks().getSelf().getHref();
                     String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
                     Toast.makeText(mcontext, item, Toast.LENGTH_LONG).show();
 
-                    Intent myIntent = new Intent(mcontext, AddFriendProfileActivity.class);
+                    Intent myIntent = new Intent(mcontext, RecommendationProfileActivity.class);
                     myIntent.putExtra("url", item);
                     myIntent.putExtra("name", thisName);
                     startActivity(myIntent);
@@ -164,16 +151,16 @@ public class AddFriendActivity extends AppCompatActivity {
             });
 
             // set the view's size, margins, paddings and layout parameters
-            AddFriendAdapter.ViewHolder vh = new AddFriendAdapter.ViewHolder(contactView);
+            RecommendationAdapter.ViewHolder vh = new RecommendationAdapter.ViewHolder(contactView);
             return vh;
         }
 
         // Replace the contents of a view (invoked by the layout manager)
         @Override
-        public void onBindViewHolder(AddFriendAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(RecommendationAdapter.ViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            Friends thisFriend = addFriendList.get(position);
+            Friends thisFriend = recommendationList.get(position);
             String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
 
             ColorGenerator generator = ColorGenerator.MATERIAL;
@@ -192,69 +179,22 @@ public class AddFriendActivity extends AppCompatActivity {
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
-            return addFriendList.size();
+            return recommendationList.size();
         }
     }
 
-    private void updateSingleUser(String uid, final HashMap params ){
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                Request.Method.PATCH,
-                UserContext.HW_REMOTE_API+uid,
-                new JSONObject(params),
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if (response != null ){
-                            httpResp.setText("Succ: " + response.toString());
-                        }
-                        else{
-                            Log.d("CRUD","expected empty json response");
-                        }
-                    }
-                },
-                new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String err_str = handleErrorResponse(error);
-                        httpResp.setText(err_str);
-                    }
-                }
-        ) {
-            @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-                    JSONObject result = null;
-                    if (jsonString != null && jsonString.length() > 0)
-                        result = new JSONObject(jsonString);
-                    return Response.success(result,
-                            HttpHeaderParser.parseCacheHeaders(response));
-                } catch (UnsupportedEncodingException e) {
-                    return Response.error(new ParseError(e));
-                } catch (JSONException je) {
-                    return Response.error(new ParseError(je));
-                }
-            }
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
-                params.put("user-agent", "android");
-                Log.d("TEST-PPL", "Params for insert ppl post");
-                //printParamsLog(params);
-                return params;
-            }
-        };
-        NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
+    //Helper Function
+    private void sendInvitation(String uid){
+        m_recommendationList.remove(uid);
+        //updatePending(owner_UID, uid);
+        mAdapter.notifyDataSetChanged();
     }
 
-    //Helper Function
-    private void getSingleUser(final String uid, final Gson gson, final boolean isOwner) {
+    private void getSingleUser(final String uid, final Gson gson) {
         final NetworkManager manager = NetworkManager.inst(_context.getApplicationContext());
 
         // VERY IMPORTANT: the volley request is Asynchronous, we must put view change inside onResponse function
-        String su_url = UserContext.HW_REMOTE_API + uid;
+        String su_url = UserContext.HW_REMOTE_API_RECOM + uid;
         JsonObjectRequest singleU = new JsonObjectRequest(
                 Request.Method.GET,
                 su_url,
@@ -342,30 +282,16 @@ public class AddFriendActivity extends AppCompatActivity {
         return defaultError;
     }
 
-    private void changeFriendList(Boolean add, String uid){
-        m_pendingFriendList.remove(uid);
-        if(add)
-            m_acceptedFriendList.add(uid);
-        HashMap<String, String> params = new HashMap<String, String>();
-        String json = new Gson().toJson(m_pendingFriendList);
-        params.put("pendingFriendList", json);
-        json = new Gson().toJson(m_acceptedFriendList);
-        params.put("acceptedFriendList", json);
-        updateSingleUser(owner_UID, params);
-        mAdapter.notifyDataSetChanged();
-    }
-
     private void handleResponseIsOwner(Friends friends) {
         // debug only, can set invisible if needed
         final Gson gson = new Gson();
         //Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
         Log.d(DEBUG, "Owner: " + friends.getFirstName() + friends.getLastName() + friends.getEmail());
-        m_acceptedFriendList = friends.getAcceptedFriendList();
-        m_pendingFriendList = friends.getPendingFriendList();
+        m_recommendationList = friends.getPendingFriendList();
         // debug only, can set invisible if needed
-        if (m_pendingFriendList != null) {
+        if (m_recommendationList != null) {
             for (String uid: friends.getPendingFriendList()){
-                getSingleUser(uid, gson, false);
+                getSingleUser(uid, gson);
             }
         }
         else{
@@ -378,10 +304,9 @@ public class AddFriendActivity extends AppCompatActivity {
         //Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
         Log.d(DEBUG, "friends: " + friends.getFirstName() + friends.getLastName() + friends.getEmail());
         // debug only, can set invisible if needed
-        pendingFriendList.add(friends);
+        recommendationList.add(friends);
         // NEED to notify the adapter that data has been changed!
         mAdapter.notifyDataSetChanged();
     }
-
 
 }

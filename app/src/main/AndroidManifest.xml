@@ -114,7 +114,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.scorpion.sleep.StartActivity" />
         </activity>
-        <activity android:name=".AddFriendActivity"
+        <activity
+            android:name=".AddFriendActivity"
             android:parentActivityName=".StartActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -123,6 +124,27 @@
         <activity
             android:name=".FriendProfileActivity"
             android:parentActivityName=".friendList">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.scorpion.sleep.StartActivity" />
+        </activity>
+        <activity
+            android:name=".AddFriendProfileActivity"
+            android:parentActivityName=".AddFriendActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.scorpion.sleep.StartActivity" />
+        </activity>
+        <activity
+            android:name=".RecommendationActivity"
+            android:parentActivityName=".StartActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.scorpion.sleep.StartActivity" />
+        </activity>
+        <activity
+            android:name=".RecommendationProfileActivity"
+            android:parentActivityName=".RecommendationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.scorpion.sleep.StartActivity" />

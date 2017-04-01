@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
@@ -19,13 +18,17 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.scorpion.sleep.Model.Friends;
 import com.scorpion.sleep.util.NetworkManager;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 
+/**
+ * Created by apple on 2017/4/1.
+ */
 
-public class FriendProfileActivity extends AppCompatActivity {
-
+public class AddFriendProfileActivity extends AppCompatActivity {
     private TextView firstname;
     private TextView lastname;
     private TextView email;
@@ -166,3 +169,4 @@ public class FriendProfileActivity extends AppCompatActivity {
     }
 
 }
+

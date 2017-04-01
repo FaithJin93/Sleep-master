@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="1dp"
-    android:paddingBottom="1dp"
-    >
+    android:paddingBottom="1dp">
 
     <FrameLayout
         android:layout_marginRight="16dp"
@@ -22,7 +20,7 @@
 
     <TextView
         android:layout_gravity="center"
-        android:id="@+id/add_friend_name"
+        android:id="@+id/invite_friend_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -32,21 +30,12 @@
         />
 
     <Button
-        android:id="@+id/add_button"
+        android:id="@+id/invite_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="13dp"
-        android:background="@drawable/check"
-        />
-    <Button
-        android:id="@+id/delete_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/cross"
+        android:text="Invite"
         />
 
 </LinearLayout>

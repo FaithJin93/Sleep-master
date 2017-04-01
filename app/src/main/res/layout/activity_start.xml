@@ -45,17 +45,16 @@
             android:paddingBottom="@dimen/grid_text_bottom_padding"
             android:textSize="@dimen/grid_text_size"
             android:gravity="center"
-            android:text="Upload Image"
+            android:text="Recommendation"
             android:layout_alignParentBottom="true"
             android:singleLine="false" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingTop="70sp"
+            android:paddingTop="20sp"
             android:id="@+id/imageView2"
-            android:src="@drawable/upload"
-            android:layout_centerInParent="true"
+            android:src="@drawable/star"
             android:layout_above="@+id/tv_2_cn"
             android:layout_centerHorizontal="true" />
 
@@ -96,18 +95,18 @@
             android:paddingBottom="@dimen/grid_text_bottom_padding"
             android:textSize="@dimen/grid_text_size"
             android:gravity="center"
-            android:text="Add Friend"
+            android:text="Pending Friends"
             android:layout_alignParentBottom="true"
             android:singleLine="false" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingTop="15sp"
+            android:paddingTop="10sp"
             android:id="@+id/imageView4"
             android:src="@drawable/add"
-            android:layout_above="@+id/tv_4_cn"
-            android:layout_centerHorizontal="true"/>
+            android:layout_above="@+id/tv_4_en"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
     <!--RelativeLayout
@@ -303,7 +302,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingTop="15sp"
+            android:paddingTop="17sp"
             android:id="@+id/imageView3"
             android:src="@drawable/friends"
             android:layout_centerInParent="true"
