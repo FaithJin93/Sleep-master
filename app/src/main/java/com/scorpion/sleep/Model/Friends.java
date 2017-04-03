@@ -17,7 +17,7 @@ public class Friends {
     private String email;
     @SerializedName("graduationYear")
     @Expose
-    private int graduationYear;
+    private String graduationYear;
     @SerializedName("university")
     @Expose
     private String university;
@@ -85,11 +85,11 @@ public class Friends {
         this.links = links;
     }
 
-    public int getGraduationYear() {
+    public String getGraduationYear() {
         return graduationYear;
     }
 
-    public void setGraduationYear(int graduationYear) {
+    public void setGraduationYear(String graduationYear) {
         this.graduationYear = graduationYear;
     }
 
@@ -108,4 +108,5 @@ public class Friends {
     public void setUniversity(String university) {
         this.university = university;
     }
+
 }

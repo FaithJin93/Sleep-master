@@ -41,6 +41,10 @@ public class profileActivity extends AppCompatActivity {
     private EditText email;
     private TextView httpResp;
     private Button saveButton;
+    private Spinner spinnerUniversity;
+    ArrayAdapter<CharSequence> adapterUniversity;
+    private Spinner spinnerYear;
+    ArrayAdapter<CharSequence> adapterYear;
 
     // For any hardcoded value, use final help its immutability, and name variable in all CAPS
     private static final String DEFAULT_UNIVERSITY = "University of Toronto";
@@ -72,6 +76,8 @@ public class profileActivity extends AppCompatActivity {
                 params.put("firstName", getFirstName());
                 params.put("lastName", getLastName());
                 params.put("email", getEmail());
+                params.put("university", spinnerUniversity.getSelectedItem().toString());
+                params.put("graduationYear", spinnerYear.getSelectedItem().toString());
 
                 updateSingleUser(userContext.getUID(), params);
 
@@ -230,10 +236,14 @@ public class profileActivity extends AppCompatActivity {
         firstname.setText(owner.getFirstName());
         lastname.setText(owner.getLastName());
         email.setText(owner.getEmail());
-        //TODO, faith change what ever you want
-        //if (!owner.getUniversity().equals(null))
-        //    universityList.setText(owner.getUniversity());
-        //graduationYearList.setText(String.valueOf(owner.getGraduationYear()));
+        if (!owner.getUniversity().equals(null)) {
+            int spinnerPosition = adapterUniversity.getPosition(owner.getUniversity());
+            spinnerUniversity.setSelection(spinnerPosition);
+        }
+        if (!owner.getGraduationYear().equals(null)) {
+            int spinnerPosition = adapterYear.getPosition(owner.getGraduationYear());
+            spinnerYear.setSelection(spinnerPosition);
+        }
 
     }
 
@@ -244,25 +254,17 @@ public class profileActivity extends AppCompatActivity {
         httpResp = (TextView) findViewById(R.id.httpResp);
         saveButton = (Button) findViewById(R.id.saveButton);
 
-        Spinner spinnerUniversity = (Spinner) findViewById(R.id.universityList);
-        ArrayAdapter<CharSequence> adapterUniversity = ArrayAdapter.createFromResource(this,R.array.universityArray,android.R.layout.simple_spinner_item);
+        spinnerUniversity = (Spinner) findViewById(R.id.universityList);
+        adapterUniversity = ArrayAdapter.createFromResource(this,R.array.universityArray,android.R.layout.simple_spinner_item);
         adapterUniversity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assert spinnerUniversity != null;
         spinnerUniversity.setAdapter(adapterUniversity);
-        if (!DEFAULT_UNIVERSITY.equals(null)) {
-            int spinnerPosition = adapterUniversity.getPosition(DEFAULT_UNIVERSITY);
-            spinnerUniversity.setSelection(spinnerPosition);
-        }
 
-        Spinner spinnerYear = (Spinner) findViewById(R.id.graduationYearList);
-        ArrayAdapter<CharSequence> adapterYear = ArrayAdapter.createFromResource(this,R.array.yearArray,android.R.layout.simple_spinner_item);
+        spinnerYear = (Spinner) findViewById(R.id.graduationYearList);
+        adapterYear = ArrayAdapter.createFromResource(this,R.array.yearArray,android.R.layout.simple_spinner_item);
         adapterYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assert spinnerYear != null;
         spinnerYear.setAdapter(adapterYear);
-        if (!DEFAULT_GRADUATION_YEAR.equals(null)) {
-            int spinnerPosition = adapterYear.getPosition(DEFAULT_GRADUATION_YEAR);
-            spinnerYear.setSelection(spinnerPosition);
-        }
     }
 
     // Those 2 functions might be helpful if update values/PATCH
