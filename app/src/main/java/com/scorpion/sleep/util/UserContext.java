@@ -35,7 +35,7 @@ public class UserContext {
 
     public static final String EMULATOR_LOCAL_API = "http://10.0.2.2:8080/friends/" ;
     public static final String HW_REMOTE_API = "http://104.131.60.15:8080/friends/" ;
-    public static final String HW_REMOTE_API_RECOM = "http://104.131.60.15:8080/friends/search/recommend/" ;
+    public static final String HW_REMOTE_API_RECOM = "http://104.131.60.15:8080/friends/search/recommend?uid=" ;
 
     private SharedPreferences prefs;
     private Context context;

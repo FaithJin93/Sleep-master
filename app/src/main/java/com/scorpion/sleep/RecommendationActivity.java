@@ -25,18 +25,18 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.google.gson.Gson;
 import com.scorpion.sleep.Model.Friends;
 import com.scorpion.sleep.util.NetworkManager;
 import com.scorpion.sleep.util.UserContext;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class RecommendationActivity extends AppCompatActivity {
@@ -73,7 +73,7 @@ public class RecommendationActivity extends AppCompatActivity {
         recommendationView = (RecyclerView) findViewById(R.id.recommendation_friend_recycler_view);
         httpResp = (TextView) findViewById(R.id.httpResp);
 
-        getSingleUser(owner_UID, gson);
+        getRecommendationList(owner_UID, gson);
         // use a linear layout manager
 
         m_recommendationList = new ArrayList<>();
@@ -190,24 +190,29 @@ public class RecommendationActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    private void getSingleUser(final String uid, final Gson gson) {
+    private void getRecommendationList(final String uid, final Gson gson) {
         final NetworkManager manager = NetworkManager.inst(_context.getApplicationContext());
 
         // VERY IMPORTANT: the volley request is Asynchronous, we must put view change inside onResponse function
         String su_url = UserContext.HW_REMOTE_API_RECOM + uid;
-        JsonObjectRequest singleU = new JsonObjectRequest(
+        JsonRequest singleU = new JsonRequest<JSONArray>(
                 Request.Method.GET,
                 su_url,
-                new JSONObject(),
-                new Response.Listener<JSONObject>() {
+                null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         if (response != null) {
-                            Friends friends = gson.fromJson(response.toString(),Friends.class);
-                            if(uid.equals(owner_UID))
-                                handleResponseIsOwner(friends);
-                            else
-                                handleResponseNotOwner(friends);
+                            for (int i = 0; i < response.length(); i ++){
+                                try {
+                                    JSONObject recommended = response.getJSONObject(i);
+                                    Friends friends = gson.fromJson(recommended.toString(),Friends.class);
+                                    recommendationList.add(friends);
+                                } catch (JSONException e) {
+                                    Log.d("Error_getRecLst", e.toString());
+                                }
+                            }
+                            mAdapter.notifyDataSetChanged();
                         } else {
                             Log.d("Error", "empty json response");
                         }
@@ -222,16 +227,17 @@ public class RecommendationActivity extends AppCompatActivity {
                 }
         ) {
             @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+            protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String jsonString = new String(response.data,
                             HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-                    JSONObject result = null;
+                    JSONArray resultList = null;
                     if (jsonString.length() > 0){
-                        result = new JSONObject(jsonString);
+                        // it's jsonArray rather than single json object
+                        resultList = new JSONArray(jsonString);
                     }
 
-                    return Response.success(result,
+                    return Response.success(resultList,
                             HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
@@ -282,31 +288,5 @@ public class RecommendationActivity extends AppCompatActivity {
         return defaultError;
     }
 
-    private void handleResponseIsOwner(Friends friends) {
-        // debug only, can set invisible if needed
-        final Gson gson = new Gson();
-        //Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
-        Log.d(DEBUG, "Owner: " + friends.getFirstName() + friends.getLastName() + friends.getEmail());
-        m_recommendationList = friends.getPendingFriendList();
-        // debug only, can set invisible if needed
-        if (m_recommendationList != null) {
-            for (String uid: friends.getPendingFriendList()){
-                getSingleUser(uid, gson);
-            }
-        }
-        else{
-            Log.d(DEBUG,"I am so lonely, i don't have any friends");
-        }
-    }
-
-    private void handleResponseNotOwner(Friends friends) {
-        // debug only, can set invisible if needed
-        //Toast.makeText(_context, response.toString(), Toast.LENGTH_SHORT).show();
-        Log.d(DEBUG, "friends: " + friends.getFirstName() + friends.getLastName() + friends.getEmail());
-        // debug only, can set invisible if needed
-        recommendationList.add(friends);
-        // NEED to notify the adapter that data has been changed!
-        mAdapter.notifyDataSetChanged();
-    }
 
 }

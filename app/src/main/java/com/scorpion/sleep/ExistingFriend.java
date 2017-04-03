@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class friendList extends AppCompatActivity {
+public class ExistingFriend extends AppCompatActivity {
     private RecyclerView friendListView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;

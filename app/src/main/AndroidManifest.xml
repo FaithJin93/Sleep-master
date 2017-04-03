@@ -100,7 +100,7 @@
                 android:value="com.scorpion.sleep.StartActivity" />
         </activity>
         <activity
-            android:name=".profileActivity"
+            android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:parentActivityName=".StartActivity">
             <meta-data
@@ -108,7 +108,7 @@
                 android:value="com.scorpion.sleep.StartActivity" />
         </activity>
         <activity
-            android:name=".friendList"
+            android:name=".ExistingFriend"
             android:parentActivityName=".StartActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -123,7 +123,7 @@
         </activity>
         <activity
             android:name=".FriendProfileActivity"
-            android:parentActivityName=".friendList">
+            android:parentActivityName=".ExistingFriend">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.scorpion.sleep.StartActivity" />
