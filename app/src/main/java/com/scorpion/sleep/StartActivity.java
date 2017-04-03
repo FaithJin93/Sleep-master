@@ -8,8 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.scorpion.sleep.Booking.BookingActivity;
-import com.scorpion.sleep.Uploading.UploadActivity;
 import com.scorpion.sleep.util.UserContext;
 
 public class StartActivity extends Activity implements View.OnClickListener {
@@ -21,14 +19,14 @@ public class StartActivity extends Activity implements View.OnClickListener {
 
         RelativeLayout personProfile = (RelativeLayout) findViewById(R.id.button_personal_profile);
         RelativeLayout friendList = (RelativeLayout) findViewById(R.id.button_friend_list);
-        RelativeLayout uploadData = (RelativeLayout) findViewById(R.id.button_upload_file);
-        RelativeLayout addFriend = (RelativeLayout) findViewById(R.id.button_add_friend);
+        RelativeLayout recommendations = (RelativeLayout) findViewById(R.id.button_recommendations);
+        RelativeLayout pendingFriend = (RelativeLayout) findViewById(R.id.button_pending_friend);
         //RelativeLayout needHelp = (RelativeLayout) findViewById(R.id.button_need_help);
         //RelativeLayout medHistory = (RelativeLayout) findViewById(R.id.button_medical_history);
         personProfile.setOnClickListener(this);
         friendList.setOnClickListener(this);
-        uploadData.setOnClickListener(this);
-        addFriend.setOnClickListener(this);
+        recommendations.setOnClickListener(this);
+        pendingFriend.setOnClickListener(this);
         //needHelp.setOnClickListener(this);
         //medHistory.setOnClickListener(this);
     }
@@ -61,19 +59,19 @@ public class StartActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_personal_profile:
-                startActivity(new Intent(this, profileActivity.class));
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.button_friend_list:
-                startActivity(new Intent(this, friendList.class));
+                startActivity(new Intent(this, ExistingFriend.class));
                 break;
-            case R.id.button_upload_file:
+            case R.id.button_recommendations:
                 startActivity(new Intent(this, RecommendationActivity.class));
                 break;
-            case R.id.button_add_friend:
+            case R.id.button_pending_friend:
                 startActivity(new Intent(this, AddFriendActivity.class));
                 break;
             /*case R.id.button_need_help:
-                startActivity(new Intent(this, profileActivity.class));
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.button_medical_history:
                 startActivity(new Intent(this, HistoryActivity.class));

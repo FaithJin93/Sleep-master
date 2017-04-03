@@ -34,7 +34,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class profileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private EditText firstname;
     private EditText lastname;

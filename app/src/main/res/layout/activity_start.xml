@@ -20,7 +20,7 @@
         grid:layout_rowWeight="1"
         grid:layout_gravity="fill_horizontal|center_horizontal"
         android:background="#F06292"
-        android:id="@+id/button_upload_file"
+        android:id="@+id/button_recommendations"
         android:layout_marginTop="@dimen/grid_single_padding"
         android:layout_marginRight="@dimen/grid_single_padding" >
 
@@ -69,7 +69,7 @@
         grid:layout_rowWeight="1"
         grid:layout_gravity="fill_horizontal|center_horizontal"
         android:background="#7986CB"
-        android:id="@+id/button_add_friend"
+        android:id="@+id/button_pending_friend"
         android:layout_marginTop="@dimen/grid_single_padding"
         android:layout_marginRight="@dimen/grid_single_padding"
         android:layout_marginBottom="@dimen/grid_single_padding">
