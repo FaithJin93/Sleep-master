@@ -109,7 +109,7 @@ public class AddFriendActivity extends AppCompatActivity {
                 avatar     = (ImageView) itemView.findViewById(R.id.imageView);
                 addButton  = (Button) itemView.findViewById(R.id.add_button);
                 addButton.setOnClickListener(this);
-                deleteButton  = (Button) itemView.findViewById(R.id.add_button);
+                deleteButton  = (Button) itemView.findViewById(R.id.delete_button);
                 deleteButton.setOnClickListener(this);
             }
 
