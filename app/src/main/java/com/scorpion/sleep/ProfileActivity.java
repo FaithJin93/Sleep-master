@@ -39,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText firstname;
     private EditText lastname;
     private EditText email;
+    private EditText major;
     private TextView httpResp;
     private Button saveButton;
     private Spinner spinnerUniversity;
@@ -76,6 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
                 params.put("firstName", getFirstName());
                 params.put("lastName", getLastName());
                 params.put("email", getEmail());
+                params.put("major",getMajor());
                 params.put("university", spinnerUniversity.getSelectedItem().toString());
                 params.put("graduationYear", spinnerYear.getSelectedItem().toString());
 
@@ -94,19 +96,14 @@ public class ProfileActivity extends AppCompatActivity {
                         new Response.Listener<JSONObject>(){
                             @Override
                             public void onResponse(JSONObject response) {
-                                if (response != null ){
-                                    httpResp.setText("Succ: " + response.toString());
-                                }
-                                else{
-                                    Log.d("CRUD","expected empty json response");
-                                }
+                                httpResp.setText("Update Successful");
                             }
                         },
                         new Response.ErrorListener(){
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 String err_str = handleErrorResponse(error);
-                                httpResp.setText(err_str);
+                                Log.d("Update", "onErrorResponse: " + err_str);
                             }
                         }
                 ) {
@@ -236,11 +233,14 @@ public class ProfileActivity extends AppCompatActivity {
         firstname.setText(owner.getFirstName());
         lastname.setText(owner.getLastName());
         email.setText(owner.getEmail());
-        if (!owner.getUniversity().equals(null)) {
+        if (owner!=null && owner.getUniversity()!=null && !owner.getUniversity().equals(null)) {
             int spinnerPosition = adapterUniversity.getPosition(owner.getUniversity());
             spinnerUniversity.setSelection(spinnerPosition);
         }
-        if (!owner.getGraduationYear().equals(null)) {
+        if (owner!=null && owner.getMajor()!=null && !owner.getMajor().equals(null)) {
+            major.setText(owner.getMajor());
+        }
+        if (owner!=null && owner.getGraduationYear().equals(null)) {
             int spinnerPosition = adapterYear.getPosition(owner.getGraduationYear());
             spinnerYear.setSelection(spinnerPosition);
         }
@@ -251,6 +251,7 @@ public class ProfileActivity extends AppCompatActivity {
         firstname = (EditText) findViewById(R.id.firstNameValue);
         lastname  = (EditText) findViewById(R.id.lastNameValue);
         email  = (EditText) findViewById(R.id.emailValue);
+        major  = (EditText) findViewById(R.id.majorValue);
         httpResp = (TextView) findViewById(R.id.httpResp);
         saveButton = (Button) findViewById(R.id.saveButton);
 
@@ -269,15 +270,19 @@ public class ProfileActivity extends AppCompatActivity {
 
     // Those 2 functions might be helpful if update values/PATCH
     public String getFirstName() {
-        return firstname.getText().toString();
+        return firstname.getText().toString().trim();
     }
 
     public String getLastName() {
-        return lastname.getText().toString();
+        return lastname.getText().toString().trim();
     }
 
     public String getEmail() {
-        return email.getText().toString();
+        return email.getText().toString().trim();
+    }
+
+    public String getMajor(){
+        return major.getText().toString().trim();
     }
 
     private void printParamsLog(Map<String, String> params) {

@@ -73,29 +73,12 @@
                 android:layout_toRightOf="@+id/universityLabel"
                 android:textSize="20dp"/>
 
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/universityList"
-                android:id="@+id/emailLabel"
-                android:textSize="20dp"
-                android:text="E-mail     "/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/universityList"
-                android:layout_toRightOf="@+id/emailLabel"
-                android:layout_alignBaseline="@+id/emailLabel"
-                android:layout_alignLeft="@+id/firstNameValue"
-                android:id="@+id/emailValue"
-                android:textSize="20dp"
-                android:hint="E-mail"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/emailValue"
+                android:layout_below="@+id/universityLabel"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 android:id="@+id/graduationYearLabel"
                 android:textSize="20dp"
                 android:text="Graduation Year     "/>
@@ -103,13 +86,55 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/emailValue"
+                android:layout_below="@+id/universityList"
                 android:layout_toRightOf="@+id/graduationYearLabel"
                 android:layout_alignBaseline="@+id/graduationYearLabel"
                 android:layout_alignLeft="@+id/firstNameValue"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 android:id="@+id/graduationYearList"
                 android:textSize="20dp"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/graduationYearLabel"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:id="@+id/majorLabel"
+                android:textSize="20dp"
+                android:text="Major     "/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/graduationYearList"
+                android:layout_toRightOf="@+id/majorLabel"
+                android:layout_alignBaseline="@+id/majorLabel"
+                android:layout_alignLeft="@+id/firstNameValue"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:id="@+id/majorValue"
+                android:textSize="16dp"
+                android:hint="major"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/majorLabel"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:id="@+id/emailLabel"
+                android:textSize="20dp"
+                android:text="E-mail     "/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/majorValue"
+                android:layout_toRightOf="@+id/emailLabel"
+                android:layout_alignBaseline="@+id/emailLabel"
+                android:layout_alignLeft="@+id/firstNameValue"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:id="@+id/emailValue"
+                android:textSize="16dp"
+                android:hint="E-mail"/>
             <!--Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -128,7 +153,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/graduationYearList"
+                android:layout_below="@+id/emailLabel"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 android:text="SAVE"
                 android:id="@+id/saveButton"/>
 
