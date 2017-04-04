@@ -37,6 +37,8 @@ public class UserContext {
     public static final String EMULATOR_LOCAL_API_RECOM = "http://10.0.2.2:8080/friends/search/recommend?uid=" ;
     public static final String HW_REMOTE_API = "http://104.131.60.15:8080/friends/" ;
     public static final String HW_REMOTE_API_RECOM = "http://104.131.60.15:8080/friends/search/recommend?uid=" ;
+    public static final String HW_REMOTE_API_INVITE = "http://104.131.60.15:8080/friends/search/recommend?uid=" ;
+    public static final String HW_REMOTE_API_ACCEPT = "http://104.131.60.15:8080/friends/befriend?" ;
 
     private SharedPreferences prefs;
     private Context context;
