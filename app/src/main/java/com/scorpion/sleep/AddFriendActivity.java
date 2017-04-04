@@ -117,7 +117,7 @@ public class AddFriendActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int itemPosition = getAdapterPosition();
                 Friends thisFriend = addFriendList.get(itemPosition);
-                String item = thisFriend.getLinks().getSelf().getHref();
+                String item = thisFriend.get_links().getSelf().getHref();
                 int index=item.lastIndexOf('/');
                 String uid = item.substring(index+1);
                 if (v.getId() == addButton.getId()) {
@@ -152,7 +152,7 @@ public class AddFriendActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     int itemPosition = addFriendView.getChildLayoutPosition(view);
                     Friends thisFriend = addFriendList.get(itemPosition);
-                    String item = thisFriend.getLinks().getSelf().getHref();
+                    String item = thisFriend.get_links().getSelf().getHref();
                     String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
                     Toast.makeText(mcontext, item, Toast.LENGTH_LONG).show();
 

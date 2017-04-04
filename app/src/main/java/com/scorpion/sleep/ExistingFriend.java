@@ -2,7 +2,6 @@ package com.scorpion.sleep;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -130,7 +129,7 @@ public class ExistingFriend extends AppCompatActivity {
                 public void onClick(View view) {
                     int itemPosition = friendListView.getChildLayoutPosition(view);
                     Friends thisFriend = friendList.get(itemPosition);
-                    String item = thisFriend.getLinks().getSelf().getHref();
+                    String item = thisFriend.getLinks().get(0).getHref();
                     String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
                     Toast.makeText(mcontext, item, Toast.LENGTH_LONG).show();
 

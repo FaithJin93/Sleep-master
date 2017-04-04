@@ -3,6 +3,7 @@ package com.scorpion.sleep.Model;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.scorpion.sleep.Model.meta.Link;
 
 public class Friends {
 
@@ -31,9 +32,13 @@ public class Friends {
     @SerializedName("pendingFriendList")
     @Expose
     private List<String> pendingFriendList = null;
+    @SerializedName("links")
+    @Expose
+    private List<Link> links = null;
     @SerializedName("_links")
     @Expose
-    private Links links;
+    private Links _links;
+
 
 
     // Getter and Setter
@@ -77,12 +82,16 @@ public class Friends {
         this.pendingFriendList = pendingFriendList;
     }
 
-    public Links getLinks() {
+    public Links get_links() {
+        return _links;
+    }
+
+    public List<Link> getLinks(){
         return links;
     }
 
-    public void setLinks(Links links) {
-        this.links = links;
+    public void set_links(Links _links) {
+        this._links = _links;
     }
 
     public String getGraduationYear() {
