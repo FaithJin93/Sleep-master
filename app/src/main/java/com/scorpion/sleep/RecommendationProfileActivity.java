@@ -153,7 +153,7 @@ public class RecommendationProfileActivity  extends AppCompatActivity {
         // debug only, can set invisible if needed
         firstname.setText(owner.getFirstName());
         lastname.setText(owner.getLastName());
-        email.setText(owner.getEmail());
+        email.setText("Unknown");
         if (owner.getUniversity()!=null && !owner.getUniversity().equals(null))
             universityList.setText(owner.getUniversity());
         graduationYearList.setText(String.valueOf(owner.getGraduationYear()));
