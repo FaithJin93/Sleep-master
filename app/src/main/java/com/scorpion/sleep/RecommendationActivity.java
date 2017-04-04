@@ -110,14 +110,15 @@ public class RecommendationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int itemPosition = getAdapterPosition();
                 Friends thisFriend = recommendationList.get(itemPosition);
-                //String item = thisFriend.get_links().getSelf().getHref();
                 String item = thisFriend.getLinks().get(0).getHref();
                 int index=item.lastIndexOf('/');
                 String uid = item.substring(index+1);
+                recommendationList.remove(itemPosition);
                 if (v.getId() == inviteButton.getId()) {
                     //Toast.makeText(v.getContext(), "works", Toast.LENGTH_SHORT).show();
-                    sendInvitation(uid);
+                    sendInvitation(owner_UID, uid);
                 }
+                mAdapter.notifyDataSetChanged();
             }
         }
 
@@ -145,7 +146,6 @@ public class RecommendationActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     int itemPosition = recommendationView.getChildLayoutPosition(view);
                     Friends thisFriend = recommendationList.get(itemPosition);
-                    //String item = thisFriend.get_links().getSelf().getHref();
                     String item = thisFriend.getLinks().get(0).getHref();
                     String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
                     Toast.makeText(mcontext, item, Toast.LENGTH_LONG).show();
@@ -191,16 +191,11 @@ public class RecommendationActivity extends AppCompatActivity {
     }
 
     //Helper Function
-    private void sendInvitation(String uid){
-        m_recommendationList.remove(uid);
-        //updatePending(owner_UID, uid);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    private void sendInvitation(String owner_uid, String uid , Boolean add){
+    private void sendInvitation(String owner_uid, String uid){
+        String url = UserContext.HW_REMOTE_API_INVITE+"uid="+owner_uid+"&listof="+uid;
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                Request.Method.PATCH,
-                UserContext.HW_REMOTE_API_ACCEPT+"uid="+owner_uid+"&friend_uid="+uid,
+                Request.Method.GET,
+                url,
                 new JSONObject(),
                 new Response.Listener<JSONObject>(){
                     @Override
