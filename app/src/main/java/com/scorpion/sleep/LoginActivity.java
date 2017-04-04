@@ -12,13 +12,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Toast;
 
 import com.scorpion.sleep.util.UserContext;
 
-public class LoginActivity extends Activity{
+public class LoginActivity extends Activity implements OnClickListener {
 	
 	private EditText userName, password;  
     private CheckBox rem_pw, auto_login;  
@@ -27,7 +26,7 @@ public class LoginActivity extends Activity{
     private Context context;
 
     public interface LoginResponseListener {
-        void onLoginSucceed();
+        void onLoginSucceed(String uid);
         void onLoginFailure();
     }
     
@@ -62,62 +61,9 @@ public class LoginActivity extends Activity{
         }
         
      //
-        btn_login.setOnClickListener(new OnClickListener() {  
+        btn_login.setOnClickListener(this);
   
-            public void onClick(final View v) {
-                v.setEnabled(false);
-                userNameValue = userName.getText().toString();  
-                passwordValue = password.getText().toString();
 
-
-                // TODO, change when we have actually LOG_IN implemented
-                if(userNameValue.equals("steve"))
-                    userContext.setUID(UserContext.STEVE_UID);
-                else if(userNameValue.equals("faith"))
-                    userContext.setUID(UserContext.FAITH_UID);
-                else if(userNameValue.equals("bob"))
-                    userContext.setUID(UserContext.BOB_UID);
-                else if(userNameValue.equals("eric"))
-                    userContext.setUID(UserContext.ERIC_UID);
-                else if(userNameValue.equals("ryan"))
-                    userContext.setUID(UserContext.RYAN_UID);
-                else if(userNameValue.equals("sid"))
-                    userContext.setUID(UserContext.SID_UID);
-                else{
-                    Toast.makeText(context, "Username Not Exist!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Intent intent = new Intent(context, StartActivity.class);
-                startActivity(intent);
-                finish();
-
-
-                userContext.attemptLogin(userNameValue, passwordValue, new LoginResponseListener() {
-
-                    @Override
-                    public void onLoginSucceed() {
-                        Log.d("LOGIN", "Login succeeded!");
-                        Toast.makeText(context, "Login Succeed", Toast.LENGTH_SHORT).show();
-                        if(rem_pw.isChecked()) {
-                            userContext.setUserName(userNameValue);
-                            userContext.setUserPassword(passwordValue);
-                        }
-                        Intent intent = new Intent(context, StartActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-
-                    @Override
-                    public void onLoginFailure() {
-                        v.setEnabled(true);
-                        Log.d("LOGIN", "Login failed!");
-                        Toast.makeText(context, "用户名或密码错误，请重新登录", Toast.LENGTH_LONG).show();
-                    }
-                });
-                  
-            }  
-        });
-        
         // 监听记住密码多选框按钮事件
         rem_pw.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {  
@@ -148,7 +94,48 @@ public class LoginActivity extends Activity{
                     userContext.setAutoLogIn(false);
                 }
             }
-        });  
-	}
+        });
+    }
+
+        public void onClick(final View v) {
+            final UserContext userContext = UserContext.getUserContext(getApplicationContext());
+
+            v.setEnabled(false);
+            userNameValue = userName.getText().toString();
+            passwordValue = password.getText().toString();
+
+
+
+
+            userContext.attemptLogin(userNameValue, passwordValue, new LoginResponseListener() {
+
+                @Override
+                public void onLoginSucceed(String uid) {
+                    Log.d("LOGIN", "Login succeeded!");
+                    /*
+                    Toast.makeText(context, "Login Succeed", Toast.LENGTH_SHORT).show();
+                    if(rem_pw.isChecked()) {
+                        userContext.setUserName(userNameValue);
+                        userContext.setUserPassword(passwordValue);
+                    }
+                    Intent intent = new Intent(context, StartActivity.class);
+                    startActivity(intent);
+                    finish();
+                    */
+                    userContext.setUID(uid);
+                    Intent intent = new Intent(context, StartActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+                @Override
+                public void onLoginFailure() {
+                    v.setEnabled(true);
+                    Log.d("LOGIN", "Login failed!");
+                    Toast.makeText(context, "UserName do not exist", Toast.LENGTH_LONG).show();
+                }
+            });
+
+        }
 
 }

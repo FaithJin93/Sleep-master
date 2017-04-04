@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -129,6 +128,7 @@ public class UserContext {
     }
 
     public void attemptLogin(final String username, final String password, final LoginActivity.LoginResponseListener callback) {
+        /*
         StringRequest request = new StringRequest(Request.Method.POST, NetworkManager.LOGIN_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -200,6 +200,32 @@ public class UserContext {
         };
 
         NetworkManager.inst(context.getApplicationContext()).submitRequest(request);
+        */
+
+        // TODO, change when we have actually LOG_IN implemented
+        switch (username) {
+            case "steve":
+                callback.onLoginSucceed(UserContext.STEVE_UID);
+                break;
+            case "faith":
+                callback.onLoginSucceed(UserContext.FAITH_UID);
+                break;
+            case "bob":
+                callback.onLoginSucceed(UserContext.BOB_UID);
+                break;
+            case "eric":
+                callback.onLoginSucceed(UserContext.ERIC_UID);
+                break;
+            case "ryan":
+                callback.onLoginSucceed(UserContext.RYAN_UID);
+                break;
+            case "sid":
+                callback.onLoginSucceed(UserContext.SID_UID);
+                break;
+            default:
+                callback.onLoginFailure();
+                break;
+        }
     }
 
     private int parseLoginSuccess(String response) throws JSONException {
@@ -215,7 +241,7 @@ public class UserContext {
         StringRequest request = new StringRequest(Request.Method.POST, NetworkManager.REGISTER_SESSION_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                callback.onLoginSucceed();
+                callback.onLoginSucceed(UserContext.STEVE_UID);
             }
         }, new Response.ErrorListener() {
             @Override
