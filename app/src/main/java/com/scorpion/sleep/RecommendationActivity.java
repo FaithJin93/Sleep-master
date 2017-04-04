@@ -146,12 +146,18 @@ public class RecommendationActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     int itemPosition = recommendationView.getChildLayoutPosition(view);
                     Friends thisFriend = recommendationList.get(itemPosition);
+
                     String item = thisFriend.getLinks().get(0).getHref();
+                    int index=item.lastIndexOf('/');
+                    String uid = item.substring(index+1);
+                    String newurl = item.substring(0,index+1) + "friends/" + uid;
+                    Log.d("recommendations",newurl);
+
                     String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
                     Toast.makeText(mcontext, item, Toast.LENGTH_LONG).show();
 
                     Intent myIntent = new Intent(mcontext, RecommendationProfileActivity.class);
-                    myIntent.putExtra("url", item);
+                    myIntent.putExtra("url", newurl);
                     myIntent.putExtra("name", thisName);
                     startActivity(myIntent);
                 }

@@ -129,11 +129,12 @@ public class ExistingFriend extends AppCompatActivity {
                 public void onClick(View view) {
                     int itemPosition = friendListView.getChildLayoutPosition(view);
                     Friends thisFriend = friendList.get(itemPosition);
-                    String item = thisFriend.getLinks().get(0).getHref();
+                    String item = thisFriend.get_links().getSelf().getHref();
                     String thisName = thisFriend.getFirstName() + " " + thisFriend.getLastName();
                     Toast.makeText(mcontext, item, Toast.LENGTH_LONG).show();
 
                     Intent myIntent = new Intent(mcontext, FriendProfileActivity.class);
+                    Log.d("putUrl", "onClick: "+ item);
                     myIntent.putExtra("url", item);
                     myIntent.putExtra("name", thisName);
                     startActivity(myIntent);
