@@ -32,6 +32,11 @@ public class UserContext {
     public static final String UID = "58c44144dd62294b320de5a5";
     public static final String STEVE_LOCAL_UID = "58c216cd160fe397212f4b3b";
     public static final String STEVE_UID = "58c219d76c934d0651fea371";
+    public static final String FAITH_UID = "58c220e1160fe3981cfe93d2";
+    public static final String ERIC_UID = "58c220ce160fe3981cfe93d1";
+    public static final String BOB_UID = "58e2a0552b40697a4b98770b";
+    public static final String SID_UID = "58e2a8572b40697a4b987721";
+    public static final String RYAN_UID = "58e2a8362b40697a4b987720";
 
     public static final String EMULATOR_LOCAL_API = "http://10.0.2.2:8080/friends/" ;
     public static final String EMULATOR_LOCAL_API_RECOM = "http://10.0.2.2:8080/friends/search/recommend?uid=" ;

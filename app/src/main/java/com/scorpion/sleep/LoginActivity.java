@@ -71,7 +71,22 @@ public class LoginActivity extends Activity{
 
 
                 // TODO, change when we have actually LOG_IN implemented
-                userContext.setUID(UserContext.STEVE_UID);
+                if(userNameValue.equals("steve"))
+                    userContext.setUID(UserContext.STEVE_UID);
+                else if(userNameValue.equals("faith"))
+                    userContext.setUID(UserContext.FAITH_UID);
+                else if(userNameValue.equals("bob"))
+                    userContext.setUID(UserContext.BOB_UID);
+                else if(userNameValue.equals("eric"))
+                    userContext.setUID(UserContext.ERIC_UID);
+                else if(userNameValue.equals("ryan"))
+                    userContext.setUID(UserContext.RYAN_UID);
+                else if(userNameValue.equals("sid"))
+                    userContext.setUID(UserContext.SID_UID);
+                else{
+                    Toast.makeText(context, "Username Not Exist!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(context, StartActivity.class);
                 startActivity(intent);
                 finish();
@@ -82,7 +97,7 @@ public class LoginActivity extends Activity{
                     @Override
                     public void onLoginSucceed() {
                         Log.d("LOGIN", "Login succeeded!");
-                        Toast.makeText(context, "登录成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Login Succeed", Toast.LENGTH_SHORT).show();
                         if(rem_pw.isChecked()) {
                             userContext.setUserName(userNameValue);
                             userContext.setUserPassword(passwordValue);
