@@ -120,12 +120,14 @@ public class AddFriendActivity extends AppCompatActivity {
                 String item = thisFriend.getLinks().getSelf().getHref();
                 int index=item.lastIndexOf('/');
                 String uid = item.substring(index+1);
+                addFriendList.remove(itemPosition);
                 if (v.getId() == addButton.getId()) {
                     //Toast.makeText(v.getContext(), "works", Toast.LENGTH_SHORT).show();
                     changeFriendList(true, uid);
                 }
                 else if (v.getId() == deleteButton.getId())
                     changeFriendList(false, uid);
+                mAdapter.notifyDataSetChanged();
             }
         }
 
@@ -196,11 +198,12 @@ public class AddFriendActivity extends AppCompatActivity {
         }
     }
 
-    private void updateSingleUser(String uid, final HashMap params ){
+    private void updateFriendList(String owner_uid, String uid , Boolean add){
+        String url = UserContext.HW_REMOTE_API_ACCEPT+"uid="+owner_uid+"&friend_uid="+uid + "&add=" + add;
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
-                Request.Method.PATCH,
-                UserContext.HW_REMOTE_API+uid,
-                new JSONObject(params),
+                Request.Method.GET,
+                url,
+                new JSONObject(),
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
@@ -346,13 +349,13 @@ public class AddFriendActivity extends AppCompatActivity {
         m_pendingFriendList.remove(uid);
         if(add)
             m_acceptedFriendList.add(uid);
-        HashMap<String, String> params = new HashMap<String, String>();
-        String json = new Gson().toJson(m_pendingFriendList);
-        params.put("pendingFriendList", json);
-        json = new Gson().toJson(m_acceptedFriendList);
-        params.put("acceptedFriendList", json);
-        updateSingleUser(owner_UID, params);
-        mAdapter.notifyDataSetChanged();
+//        HashMap<String, String> params = new HashMap<String, String>();
+//        String json = new Gson().toJson(m_pendingFriendList);
+//        params.put("pendingFriendList", json);
+//        json = new Gson().toJson(m_acceptedFriendList);
+//        params.put("acceptedFriendList", json);
+        updateFriendList(owner_UID, uid, add);
+
     }
 
     private void handleResponseIsOwner(Friends friends) {

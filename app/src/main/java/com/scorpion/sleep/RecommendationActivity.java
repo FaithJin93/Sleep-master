@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -25,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.google.gson.Gson;
 import com.scorpion.sleep.Model.Friends;
@@ -37,7 +39,9 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RecommendationActivity extends AppCompatActivity {
     private RecyclerView recommendationView;
@@ -85,7 +89,7 @@ public class RecommendationActivity extends AppCompatActivity {
     }
 
     public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.ViewHolder> {
-        private List<Friends> recommendationList;
+        //private List<Friends> recommendationList;
         private Context mcontext;
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -119,7 +123,8 @@ public class RecommendationActivity extends AppCompatActivity {
         // Provide a suitable constructor (depends on the kind of dataset)
         public RecommendationAdapter(Context contexts, List<Friends> recommendationList) {
             this.mcontext = contexts;
-            this.recommendationList = recommendationList;
+            //this.recommendationList = new ArrayList<>();
+            //this.recommendationList = recommendationList;
         }
 
         private Context getContext(){
@@ -189,6 +194,60 @@ public class RecommendationActivity extends AppCompatActivity {
         //updatePending(owner_UID, uid);
         mAdapter.notifyDataSetChanged();
     }
+
+    private void sendInvitation(String owner_uid, String uid , Boolean add){
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.PATCH,
+                UserContext.HW_REMOTE_API_ACCEPT+"uid="+owner_uid+"&friend_uid="+uid,
+                new JSONObject(),
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null ){
+                            httpResp.setText("Succ: " + response.toString());
+                        }
+                        else{
+                            Log.d("CRUD","expected empty json response");
+                        }
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String err_str = handleErrorResponse(error);
+                        httpResp.setText(err_str);
+                    }
+                }
+        ) {
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
+                    JSONObject result = null;
+                    if (jsonString != null && jsonString.length() > 0)
+                        result = new JSONObject(jsonString);
+                    return Response.success(result,
+                            HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (JSONException je) {
+                    return Response.error(new ParseError(je));
+                }
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/json");
+                params.put("user-agent", "android");
+                Log.d("TEST-PPL", "Params for insert ppl post");
+                //printParamsLog(params);
+                return params;
+            }
+        };
+        NetworkManager.inst(_context.getApplicationContext()).submitRequest(jsonRequest);
+    }
+
 
     private void getRecommendationList(final String uid, final Gson gson) {
         final NetworkManager manager = NetworkManager.inst(_context.getApplicationContext());
