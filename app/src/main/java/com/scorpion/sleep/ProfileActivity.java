@@ -240,7 +240,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (owner!=null && owner.getMajor()!=null && !owner.getMajor().equals(null)) {
             major.setText(owner.getMajor());
         }
-        if (owner!=null && owner.getGraduationYear().equals(null)) {
+        if (owner!=null && !owner.getGraduationYear().equals(null)) {
             int spinnerPosition = adapterYear.getPosition(owner.getGraduationYear());
             spinnerYear.setSelection(spinnerPosition);
         }
